@@ -1,0 +1,112 @@
+package com.webproject.model;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.Collection;
+import java.util.Objects;
+
+@Entity
+@Table(name = "delivery")
+public class Delivery {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "delivery_id", nullable = false)
+    private int deliveryId;
+    @Basic
+    @Column(name = "name", nullable = false, length = 255)
+    private String name;
+    @Basic
+    @Column(name = "price", nullable = false, precision = 0)
+    private double price;
+    @Basic
+    @Column(name = "description", nullable = true, length = 255)
+    private String description;
+    @Basic
+    @Column(name = "isDeleted", nullable = true)
+    private Boolean isDeleted;
+    @Basic
+    @Column(name = "createDate", nullable = false)
+    private Date createDate;
+    @Basic
+    @Column(name = "updateDate", nullable = true)
+    private Date updateDate;
+    @OneToMany(mappedBy = "deliveryByDeliveryId")
+    private Collection<Order> ordersByDeliveryId;
+
+    public int getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(int deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Delivery delivery = (Delivery) o;
+        return deliveryId == delivery.deliveryId && Double.compare(delivery.price, price) == 0 && Objects.equals(name, delivery.name) && Objects.equals(description, delivery.description) && Objects.equals(isDeleted, delivery.isDeleted) && Objects.equals(createDate, delivery.createDate) && Objects.equals(updateDate, delivery.updateDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deliveryId, name, price, description, isDeleted, createDate, updateDate);
+    }
+
+    public Collection<Order> getOrdersByDeliveryId() {
+        return ordersByDeliveryId;
+    }
+
+    public void setOrdersByDeliveryId(Collection<Order> ordersByDeliveryId) {
+        this.ordersByDeliveryId = ordersByDeliveryId;
+    }
+}
