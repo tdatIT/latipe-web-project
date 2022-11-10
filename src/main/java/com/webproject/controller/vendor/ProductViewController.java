@@ -28,7 +28,6 @@ public class ProductController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         HttpSession session = req.getSession();
         try {
-
             int shop_id = (Integer) session.getAttribute(SessionVar.STORE_ID);
             List<Product> products = service.findProductByStoreId(shop_id);
             req.setAttribute("products", products);
