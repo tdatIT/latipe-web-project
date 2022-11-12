@@ -5,7 +5,6 @@ import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
@@ -13,37 +12,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements IUsersDAO {
-    private SessionFactory factory = HibernateUtils.getSessionFactory();
 
     @Override
     public User findById(int id) {
         User user = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        user = session.get(User.class, id);
-        tx.commit();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            user = session.get(User.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return user;
     }
 
     @Override
     public boolean validate(String email, String password) {
         //Using HQL
+        Session session = HibernateUtils.getSessionFactory().openSession();
         String HQL = "from User where email = :email and hashedPassword = :password";
         List<User> users = new ArrayList<>();
         boolean status = false;
         try {
-            Session session = factory.getCurrentSession();
-            Transaction tx = session.beginTransaction();
             users = session.createQuery(HQL)
                     .setParameter("email", email)
                     .setParameter("password", password)
                     .list();
-            tx.commit();
             if (users.size() > 0) {
                 status = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return status;
     }
@@ -52,17 +54,16 @@ public class UserDAOImpl implements IUsersDAO {
     public User getUserByEmail(String email) {
         //Using Criteria
         User us = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
+        Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             Criteria criteria = session.createCriteria(User.class);
             us = (User) criteria.add(Restrictions.eq("email", email))
                     .uniqueResult();
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            session.close();
         }
-        tx.commit();
         return us;
     }
 
@@ -71,7 +72,7 @@ public class UserDAOImpl implements IUsersDAO {
         //insert new user and return status for check
         boolean status = false;
         Transaction tx = null;
-        Session session = factory.getCurrentSession();
+        Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             //start a transaction
             tx = session.beginTransaction();
@@ -81,9 +82,10 @@ public class UserDAOImpl implements IUsersDAO {
             status = true;
         } catch (Exception e) {
             //roll back trans when insert failed
-            if (tx != null)
-                tx.rollback();
+            tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return status;
     }
@@ -93,7 +95,7 @@ public class UserDAOImpl implements IUsersDAO {
         //update user and return status for check
         boolean status = false;
         Transaction tx = null;
-        Session session = factory.getCurrentSession();
+        Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             //start a transaction
             tx = session.beginTransaction();
@@ -103,9 +105,9 @@ public class UserDAOImpl implements IUsersDAO {
             status = true;
         } catch (Exception e) {
             //roll back trans when insert failed
-            if (tx != null)
-                tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return status;
     }
@@ -115,7 +117,7 @@ public class UserDAOImpl implements IUsersDAO {
         //update user and return status for check
         boolean status = false;
         Transaction tx = null;
-        Session session = factory.getCurrentSession();
+        Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             //retrieve Object
             User user = session.get(User.class, id);
@@ -128,9 +130,9 @@ public class UserDAOImpl implements IUsersDAO {
             status = true;
         } catch (Exception e) {
             //roll back trans when insert failed
-            if (tx != null)
-                tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return status;
     }

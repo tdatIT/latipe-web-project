@@ -1,2 +1,9 @@
-package com.webproject.service;public class IProductImgService {
+package com.webproject.service;
+
+import com.webproject.model.ProductImg;
+
+public interface IProductImgService {
+    ProductImg getImageById(int id);
+
+    void insertProductImage(ProductImg img);
 }

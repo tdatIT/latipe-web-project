@@ -42,7 +42,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public boolean insertProduct(Product product) {
+    public int insertProduct(Product product) {
         return productDAO.insertProduct(product);
     }
 

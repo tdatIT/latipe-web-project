@@ -5,56 +5,69 @@ import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.Category;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 public class CategoryDAOImpl implements ICategoryDAO {
 
-    private SessionFactory factory = HibernateUtils.getSessionFactory();
 
     @Override
     public List<Category> findAll() {
-        String HQL = "from Category";
         List<Category> categories = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        categories = session.createQuery(HQL).list();
-        tx.commit();
+        String HQL = "from Category";
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            categories = session.createQuery(HQL).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return categories;
     }
 
     @Override
     public List<Category> findByParentId(int id) {
-        String HQL = "from Category where parentCategoryId=:parentId";
         List<Category> categories = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        categories = session.createQuery(HQL).setParameter("parentId", id).list();
-        tx.commit();
+        String HQL = "from Category where parentCategoryId=:parentId";
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            categories = session.createQuery(HQL).setParameter("parentId", id).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return categories;
     }
 
     @Override
     public Category findById(int id) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
         Category category = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        category = session.get(Category.class, id);
-        tx.commit();
+        try {
+            category = session.get(Category.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return category;
     }
 
     @Override
     public Category findByName(String name) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
         Category category = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        Criteria criteria = session.createCriteria(Category.class);
-        category = (Category) criteria.add(Restrictions.eq("name", name)).uniqueResult();
-        tx.commit();
+        try {
+            Criteria criteria = session.createCriteria(Category.class);
+            category = (Category) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return category;
     }
 

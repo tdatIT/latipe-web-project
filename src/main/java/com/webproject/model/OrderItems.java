@@ -20,10 +20,10 @@ public class OrderItems {
     @Column(name = "quantity", nullable = false)
     private int quantity;
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false, insertable=false, updatable=false)
-    private Order orderByOrderId;
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false, insertable = false, updatable = false)
+    private Orders orderByOrderId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false, insertable = false, updatable = false)
     private Product productByProductId;
 
     public int getId() {
@@ -71,12 +71,12 @@ public class OrderItems {
         return Objects.hash(id, orderId, productId, quantity);
     }
 
-    public Order getOrderByOrderId() {
+    public Orders getOrderByOrderId() {
         return orderByOrderId;
     }
 
-    public void setOrderByOrderId(Order orderByOrderId) {
-        this.orderByOrderId = orderByOrderId;
+    public void setOrderByOrderId(Orders orderByOrdersId) {
+        this.orderByOrderId = orderByOrdersId;
     }
 
     public Product getProductByProductId() {

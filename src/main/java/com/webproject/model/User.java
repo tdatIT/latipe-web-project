@@ -66,7 +66,7 @@ public class User {
     @OneToMany(mappedBy = "userByUserId")
     private Collection<Cart> cartsByUserId;
     @OneToMany(mappedBy = "userByUserId")
-    private Collection<Order> ordersByUserId;
+    private Collection<Orders> ordersByUserId;
     @OneToMany(mappedBy = "userByUserId")
     private Collection<Review> reviewsByUserId;
     @OneToMany(mappedBy = "userByOwnId")
@@ -252,11 +252,11 @@ public class User {
         this.cartsByUserId = cartsByUserId;
     }
 
-    public Collection<Order> getOrdersByUserId() {
+    public Collection<Orders> getOrdersByUserId() {
         return ordersByUserId;
     }
 
-    public void setOrdersByUserId(Collection<Order> ordersByUserId) {
+    public void setOrdersByUserId(Collection<Orders> ordersByUserId) {
         this.ordersByUserId = ordersByUserId;
     }
 

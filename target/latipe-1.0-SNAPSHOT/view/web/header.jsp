@@ -30,6 +30,7 @@
                         <div class="header__top__right__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="store-admin/dashboard"><i class="fa fa-bar-chart"></i> Cửa hàng</a>
                         </div>
                         <c:if test="${sessionScope.user_id eq null}">
                             <div class="header__top__right__social">
@@ -42,7 +43,7 @@
                         </c:if>
                         <c:if test="${sessionScope.user_id ne null}">
                             <div class="header__top__right__social">
-                                <a href="login"><i class="fa fa-user" style="margin-right:5px ;"></i>Xin
+                                <a href="#"><i class="fa fa-user" style="margin-right:5px ;"></i>Xin
                                     chào ${sessionScope.lastname}</a>
 
                             </div>

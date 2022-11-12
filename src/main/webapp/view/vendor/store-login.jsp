@@ -7,6 +7,7 @@
     <title>Latipe Vendor - Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/view/web/assets/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="view/vendor/assets/css/adminx.css" media="screen"/>
 </head>
 <body>
@@ -14,7 +15,8 @@
     <div class="page-login">
         <div class="text-center">
             <a class="navbar-brand mb-4 h1" href="#">
-                <img src="${pageContext.request.contextPath}/view/web/assets/img/favicon.png" class="navbar-brand-image d-inline-block align-top mr-2"
+                <img src="${pageContext.request.contextPath}/view/web/assets/img/favicon.png"
+                     class="navbar-brand-image d-inline-block align-top mr-2"
                      alt="">
                 Latipe Vendor
             </a>
@@ -22,9 +24,14 @@
 
         <div class="card mb-0">
             <div class="card-body">
-                <c:if  test="${status eq false}">
+                <c:if test="${status eq 0}">
                     <div class="alert alert-danger" role="alert">
                         Sai tài khoản và mật khẩu !
+                    </div>
+                </c:if>
+                <c:if test="${status eq 1}">
+                    <div class="alert alert-success" role="alert">
+                        Vui lòng đăng nhập lại tài khoản chủ cửa hàng !
                     </div>
                 </c:if>
             </div>
@@ -51,6 +58,9 @@
                     </div>
                     <button type="submit" class="btn btn-sm btn-block btn-primary">Sign in</button>
                 </form>
+            </div>
+            <div class="card-footer text-center">
+                <a href="forgot"><small>Đăng Ký Cửa Hàng</small></a>
             </div>
             <div class="card-footer text-center">
                 <a href="forgot"><small>Forgot your password?</small></a>

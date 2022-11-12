@@ -14,8 +14,11 @@ public class Router {
     public static final String STORE_DETAIL = "view/vendor/store-detail.jsp";
     public static final String STORE_LOGIN_PAGE = "view/vendor/store-login.jsp";
     public static final String STORE_DASHBOARD = "view/vendor/dashboard.jsp";
-    public static final String S_PRODUCT_M = "view/vendor/store-product.jsp";
+    public static final String S_PRODUCT_PAGE = "view/vendor/store-product.jsp";
+    public static final String S_PRODUCT_INFO_PAGE = "view/vendor/product-info.jsp";
+
     public static final String S_ORDER_M = "view/vendor/store-order.jsp";
+    public static final String S_ORDER_P = "view/vendor/order-detail.jsp";
     public static final String S_EMP_M = "view/vendor/store-emp.jsp";
     public static final String S_ANALYTICS_M = "view/vendor/store-analytics.jsp";
     //Page for admin
@@ -37,9 +40,15 @@ public class Router {
     public static final String STORE_FILTER = "/store-admin";
     public static final String STORE_D = "/store-admin/dashboard";
     public static final String STORE_P = "/store-admin/product";
+    public static final String S_PRODUCT_C = "/store-admin/product-create";
+    public static final String S_PRODUCT_U = "/store-admin/product-update";
+    public static final String S_PRODUCT_D = "/store-admin/product-delete";
     public static final String STORE_O = "/store-admin/order";
+    public static final String STORE_O_P = "/store-admin/order-process";
+    public static final String STORE_O_D = "/store-admin/order-delete";
     public static final String STORE_E = "/store-admin/employee";
     public static final String STORE_A = "/store-admin/analytics";
+
 
     //Admin
 

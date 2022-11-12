@@ -1,25 +1,25 @@
 package com.webproject.dao;
 
-import com.webproject.model.Order;
+import com.webproject.model.Orders;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface IOrderDAO {
 
-    List<Order> findAll();
+    List<Orders> findAll();
 
-    List<Order> findByUserId(int id);
+    List<Orders> findByUserId(int id);
 
-    List<Order> findByShopId(int id);
+    List<Orders> findByShopId(int id);
 
-    Order findById(int id);
+    Orders findById(int id);
 
-    List<Order> findByDate(Date date);
+    List<Orders> findByDate(Date date);
 
-    boolean insertOrder(Order order);
+    boolean insertOrder(Orders orders);
 
-    boolean updateOrder(Order order);
+    boolean updateOrder(Orders orders);
 
     boolean cancelOrder(int id);
 

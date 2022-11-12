@@ -2,7 +2,7 @@ package com.webproject.service.impl;
 
 import com.webproject.dao.IOrderDAO;
 import com.webproject.dao.impl.OrderDAOImpl;
-import com.webproject.model.Order;
+import com.webproject.model.Orders;
 import com.webproject.service.IOrderService;
 
 import java.sql.Date;
@@ -12,38 +12,38 @@ public class OrderServiceImpl implements IOrderService {
     private IOrderDAO orderDAO = new OrderDAOImpl();
 
     @Override
-    public List<Order> findAll() {
+    public List<Orders> findAll() {
         return orderDAO.findAll();
     }
 
     @Override
-    public List<Order> findByUserId(int id) {
+    public List<Orders> findByUserId(int id) {
         return orderDAO.findByUserId(id);
     }
 
     @Override
-    public List<Order> findByShopId(int id) {
+    public List<Orders> findByShopId(int id) {
         return orderDAO.findByShopId(id);
     }
 
     @Override
-    public Order findById(int id) {
+    public Orders findById(int id) {
         return orderDAO.findById(id);
     }
 
     @Override
-    public List<Order> findByDate(Date date) {
+    public List<Orders> findByDate(Date date) {
         return orderDAO.findByDate(date);
     }
 
     @Override
-    public boolean insertOrder(Order order) {
-        return orderDAO.insertOrder(order);
+    public boolean insertOrder(Orders orders) {
+        return orderDAO.insertOrder(orders);
     }
 
     @Override
-    public boolean updateOrder(Order order) {
-        return orderDAO.updateOrder(order);
+    public boolean updateOrder(Orders orders) {
+        return orderDAO.updateOrder(orders);
     }
 
     @Override

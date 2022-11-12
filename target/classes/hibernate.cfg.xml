@@ -25,8 +25,6 @@
         </property>
         <property name="show_sql">true</property>
 
-        <property name="current_session_context_class">thread</property>
-
 
         <!--List of XML mapping files &ndash-->
         <mapping class="com.webproject.model.User"/>
@@ -40,7 +38,7 @@
         <mapping class="com.webproject.model.Cart"/>
         <mapping class="com.webproject.model.CartItems"/>
         <mapping class="com.webproject.model.OrderItems"/>
-        <mapping class="com.webproject.model.Order"/>
+        <mapping class="com.webproject.model.Orders"/>
         <mapping class="com.webproject.model.StoreLevel"/>
         <mapping class="com.webproject.model.Store"/>
         <mapping class="com.webproject.model.Commission"/>

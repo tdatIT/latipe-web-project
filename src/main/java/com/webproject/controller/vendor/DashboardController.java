@@ -28,9 +28,6 @@ public class DashboardController extends HttpServlet {
         HttpSession session = req.getSession();
         try {
             int user_id = (Integer) session.getAttribute(SessionVar.USER_ID);
-            Store store = storeService.findByOwnId(user_id);
-            session.setAttribute(SessionVar.STORE_ID, store.getStoreId());
-            session.setAttribute(SessionVar.STORE_OBJ, store);
             req.getRequestDispatcher("/" + Router.STORE_DASHBOARD).forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();

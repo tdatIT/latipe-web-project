@@ -19,7 +19,7 @@ public class ProductImg {
     @Basic
     @Column(name = "location", nullable = true, length = 255)
     private String location;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false, insertable=false, updatable=false)
     private Product productByProductId;
 

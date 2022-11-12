@@ -7,23 +7,28 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class IProductImgDAOImpl implements IProductImgDAO {
+public class ProductImgDAOImpl implements IProductImgDAO {
     private SessionFactory factory;
 
     @Override
     public ProductImg getImageById(int id) {
         factory = HibernateUtils.getSessionFactory();
         Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        ProductImg img = session.get(ProductImg.class, id);
-        tx.commit();
+        ProductImg img = null;
+        try {
+            img = session.get(ProductImg.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return img;
     }
 
     @Override
     public void insertProductImage(ProductImg img) {
         factory = HibernateUtils.getSessionFactory();
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
             session.save(img);
@@ -31,6 +36,8 @@ public class IProductImgDAOImpl implements IProductImgDAO {
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
+        } finally {
+            session.close();
         }
 
     }

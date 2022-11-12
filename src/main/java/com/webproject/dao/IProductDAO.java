@@ -17,7 +17,7 @@ public interface IProductDAO {
 
     Product findByName(String name);
 
-    boolean insertProduct(Product product);
+    int insertProduct(Product product);
 
     boolean updateProduct(Product product);
 

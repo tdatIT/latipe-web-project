@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="order")
-public class Order {
+@Table(name = "orders")
+public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "order_id", nullable = false)
@@ -52,15 +52,15 @@ public class Order {
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByUserId;
     @ManyToOne
-    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false, insertable = false, updatable = false)
     private Store storeByStoreId;
     @ManyToOne
-    @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id", nullable = false, insertable = false, updatable = false)
     private Delivery deliveryByDeliveryId;
-    @OneToMany(mappedBy = "orderByOrderId")
+    @OneToMany(mappedBy = "orderByOrderId", fetch = FetchType.LAZY)
     private Collection<OrderItems> orderItemsByOrderId;
 
     public int getOrderId() {
@@ -179,8 +179,8 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return orderId == order.orderId && userId == order.userId && storeId == order.storeId && deliveryId == order.deliveryId && status == order.status && isPaidBefore == order.isPaidBefore && Double.compare(order.amountFromUser, amountFromUser) == 0 && Double.compare(order.amountFromStore, amountFromStore) == 0 && Double.compare(order.amountToStore, amountToStore) == 0 && Double.compare(order.amountToGd, amountToGd) == 0 && Objects.equals(address, order.address) && Objects.equals(phone, order.phone) && Objects.equals(createDate, order.createDate) && Objects.equals(updateDate, order.updateDate);
+        Orders orders = (Orders) o;
+        return orderId == orders.orderId && userId == orders.userId && storeId == orders.storeId && deliveryId == orders.deliveryId && status == orders.status && isPaidBefore == orders.isPaidBefore && Double.compare(orders.amountFromUser, amountFromUser) == 0 && Double.compare(orders.amountFromStore, amountFromStore) == 0 && Double.compare(orders.amountToStore, amountToStore) == 0 && Double.compare(orders.amountToGd, amountToGd) == 0 && Objects.equals(address, orders.address) && Objects.equals(phone, orders.phone) && Objects.equals(createDate, orders.createDate) && Objects.equals(updateDate, orders.updateDate);
     }
 
     @Override

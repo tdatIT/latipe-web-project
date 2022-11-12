@@ -52,7 +52,7 @@ public class Store {
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
     @OneToMany(mappedBy = "storeByStoreId")
-    private Collection<Order> ordersByStoreId;
+    private Collection<Orders> ordersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId")
     private Collection<Review> reviewsByStoreId;
     @ManyToOne
@@ -67,6 +67,17 @@ public class Store {
     private Collection<User> usersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId")
     private Collection<UserFollowStore> userFollowStoresByStoreId;
+
+    @OneToMany(mappedBy = "storeByStoreId",fetch = FetchType.LAZY)
+    private Collection<Product> productsByStoreId;
+
+    public Collection<Product> getProductsByStoreId() {
+        return productsByStoreId;
+    }
+
+    public void setProductsByStoreId(Collection<Product> productsByStoreId) {
+        this.productsByStoreId = productsByStoreId;
+    }
 
     public int getStoreId() {
         return storeId;
@@ -193,11 +204,11 @@ public class Store {
         return Objects.hash(storeId, name, ownId, commissionId, bio, isActive, avatar, cover, featuredImages, point, rating, eWallet, createDate, updateDate);
     }
 
-    public Collection<Order> getOrdersByStoreId() {
+    public Collection<Orders> getOrdersByStoreId() {
         return ordersByStoreId;
     }
 
-    public void setOrdersByStoreId(Collection<Order> ordersByStoreId) {
+    public void setOrdersByStoreId(Collection<Orders> ordersByStoreId) {
         this.ordersByStoreId = ordersByStoreId;
     }
 

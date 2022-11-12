@@ -31,7 +31,7 @@ public class Delivery {
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
     @OneToMany(mappedBy = "deliveryByDeliveryId")
-    private Collection<Order> ordersByDeliveryId;
+    private Collection<Orders> ordersByDeliveryId;
 
     public int getDeliveryId() {
         return deliveryId;
@@ -102,11 +102,11 @@ public class Delivery {
         return Objects.hash(deliveryId, name, price, description, isDeleted, createDate, updateDate);
     }
 
-    public Collection<Order> getOrdersByDeliveryId() {
+    public Collection<Orders> getOrdersByDeliveryId() {
         return ordersByDeliveryId;
     }
 
-    public void setOrdersByDeliveryId(Collection<Order> ordersByDeliveryId) {
+    public void setOrdersByDeliveryId(Collection<Orders> ordersByDeliveryId) {
         this.ordersByDeliveryId = ordersByDeliveryId;
     }
 }

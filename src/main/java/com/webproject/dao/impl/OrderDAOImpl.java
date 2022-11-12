@@ -2,7 +2,8 @@ package com.webproject.dao.impl;
 
 import com.webproject.dao.IOrderDAO;
 import com.webproject.hibernate.HibernateUtils;
-import com.webproject.model.Order;
+import com.webproject.model.Orders;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,9 +15,9 @@ public class OrderDAOImpl implements IOrderDAO {
     private SessionFactory factory = HibernateUtils.getSessionFactory();
 
     @Override
-    public List<Order> findAll() {
-        List<Order> orders = null;
-        String HQL = "from Order";
+    public List<Orders> findAll() {
+        List<Orders> orders = null;
+        String HQL = "from Orders";
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         orders = session.createQuery(HQL).list();
@@ -25,9 +26,9 @@ public class OrderDAOImpl implements IOrderDAO {
     }
 
     @Override
-    public List<Order> findByUserId(int id) {
-        List<Order> orders = null;
-        String HQL = "from Order where userId = :id";
+    public List<Orders> findByUserId(int id) {
+        List<Orders> orders = null;
+        String HQL = "from Orders where userId = :id";
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         orders = session.createQuery(HQL)
@@ -37,35 +38,41 @@ public class OrderDAOImpl implements IOrderDAO {
     }
 
     @Override
-    public List<Order> findByShopId(int id) {
-        List<Order> orders = null;
-        String HQL = "from Order where storeId = :id";
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        orders = session.createQuery(HQL)
-                .setParameter("id", id).list();
-        tx.commit();
-        return orders;
-    }
-
-    @Override
-    public Order findById(int id) {
-        Order order = null;
-        Session session = factory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
+    public List<Orders> findByShopId(int id) {
+        List<Orders> orders = null;
+        String HQL = "from Orders where storeId = :id";
+        Session session = HibernateUtils.getSessionFactory().getSessionFactory().openSession();
         try {
-            order = session.get(Order.class, id);
-            tx.commit();
+            orders = session.createQuery(HQL)
+                    .setParameter("id", id).list();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            session.close();
         }
-        return order;
+        return orders;
     }
 
     @Override
-    public List<Order> findByDate(Date date) {
-        List<Order> orders = null;
-        String HQL = "from Order where createDate = :date";
+    public Orders findById(int id) {
+        Orders orders = null;
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            orders = session.get(Orders.class, id);
+            Hibernate.initialize(orders.getOrderItemsByOrderId());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Orders> findByDate(Date date) {
+        List<Orders> orders = null;
+        String HQL = "from Orders where createDate = :date";
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         orders = session.createQuery(HQL)
@@ -75,12 +82,12 @@ public class OrderDAOImpl implements IOrderDAO {
     }
 
     @Override
-    public boolean insertOrder(Order order) {
+    public boolean insertOrder(Orders orders) {
         boolean status = false;
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.save(order);
+            session.save(orders);
             tx.commit();
             status = true;
         } catch (Exception e) {
@@ -91,12 +98,12 @@ public class OrderDAOImpl implements IOrderDAO {
     }
 
     @Override
-    public boolean updateOrder(Order order) {
+    public boolean updateOrder(Orders orders) {
         boolean status = false;
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.update(order);
+            session.update(orders);
             tx.commit();
             status = true;
         } catch (Exception e) {
@@ -112,9 +119,9 @@ public class OrderDAOImpl implements IOrderDAO {
         Session session = factory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
-            Order order = session.get(Order.class, id);
-            order.setStatus(0);
-            session.update(order);
+            Orders orders = session.get(Orders.class, id);
+            orders.setStatus(0);
+            session.update(orders);
             tx.commit();
             status = true;
         } catch (Exception e) {

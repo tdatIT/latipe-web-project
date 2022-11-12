@@ -1,12 +1,12 @@
 package com.webproject.service.impl;
 
 import com.webproject.dao.IProductImgDAO;
-import com.webproject.dao.impl.IProductImgDAOImpl;
+import com.webproject.dao.impl.ProductImgDAOImpl;
 import com.webproject.model.ProductImg;
 import com.webproject.service.IProductImgService;
 
-public class ProductImgImpl implements IProductImgService {
-    private IProductImgDAO dao = new IProductImgDAOImpl();
+public class ProductImgServiceImpl implements IProductImgService {
+    private IProductImgDAO dao = new ProductImgDAOImpl();
 
     @Override
     public ProductImg getImageById(int id) {

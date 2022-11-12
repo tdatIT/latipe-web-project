@@ -1,6 +1,8 @@
 package com.webproject.controller.filter;
 
 
+import com.webproject.service.IUserService;
+import com.webproject.service.impl.UserServiceImpl;
 import com.webproject.variable.RoleConst;
 import com.webproject.variable.Router;
 import com.webproject.variable.SessionVar;
@@ -14,11 +16,13 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {Router.STORE_FILTER + "/*"})
 public class VendorFilter implements Filter {
+    private IUserService service;
     private ServletContext context;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.context = filterConfig.getServletContext();
+        service = new UserServiceImpl();
     }
 
     @Override
@@ -30,7 +34,8 @@ public class VendorFilter implements Filter {
         if (url.startsWith(req.getContextPath() + Router.STORE_FILTER)) {
             if (session.getAttribute(SessionVar.ROLE_ID) != null) {
                 int user_role_id = (Integer) session.getAttribute(SessionVar.ROLE_ID);
-                if (user_role_id == RoleConst.VENDOR) {
+                if (user_role_id == RoleConst.VENDOR &&
+                        session.getAttribute(SessionVar.STORE_ID) != null) {
                     filterChain.doFilter(servletRequest, servletResponse);
                 } else {
                     resp.sendRedirect(req.getContextPath() + Router.STORE_LOGIN + "?message=no");

@@ -58,12 +58,41 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id", insertable = false, updatable = false)
     private Category categoryByCategoryId;
-    @OneToMany(mappedBy = "productByProductId")
+
+    @ManyToOne
+    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false, insertable = false, updatable = false)
+    private Store storeByStoreId;
+    @OneToMany(mappedBy = "productByProductId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<ProductImg> productImgsByProductId;
     @OneToMany(mappedBy = "productByProductId")
     private Collection<Review> reviewsByProductId;
     @OneToMany(mappedBy = "productByProductId")
     private Collection<UserFollowProduct> userFollowProductsByProductId;
+
+    public Product() {
+    }
+
+    public Product(String name, String description, double price, Double promotionalPrice,
+                   int quantity, boolean isActive, String video, int storeId, Date createDate, Integer categoryId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.promotionalPrice = promotionalPrice;
+        this.quantity = quantity;
+        this.isActive = isActive;
+        this.video = video;
+        this.storeId = storeId;
+        this.createDate = createDate;
+        this.categoryId = categoryId;
+    }
+
+    public Store getStoreByStoreId() {
+        return storeByStoreId;
+    }
+
+    public void setStoreByStoreId(Store storeByStoreId) {
+        this.storeByStoreId = storeByStoreId;
+    }
 
     public int getProductId() {
         return productId;

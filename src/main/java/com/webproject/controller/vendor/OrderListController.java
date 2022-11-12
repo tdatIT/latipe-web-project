@@ -1,6 +1,6 @@
 package com.webproject.controller.vendor;
 
-import com.webproject.model.Order;
+import com.webproject.model.Orders;
 import com.webproject.model.Store;
 import com.webproject.service.IOrderService;
 import com.webproject.service.impl.OrderServiceImpl;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = {Router.STORE_O})
-public class OrderController extends HttpServlet {
+public class OrderListController extends HttpServlet {
     private IOrderService orderService = new OrderServiceImpl();
 
     @Override
@@ -27,7 +27,7 @@ public class OrderController extends HttpServlet {
         try {
             if (session.getAttribute(SessionVar.STORE_OBJ) != null) {
                 Store store = (Store) session.getAttribute(SessionVar.STORE_OBJ);
-                List<Order> orders = orderService.findByShopId(store.getStoreId());
+                List<Orders> orders = orderService.findByShopId(store.getStoreId());
                 req.setAttribute("orders", orders);
                 req.getRequestDispatcher("/" + Router.S_ORDER_M).forward(req, resp);
             }
