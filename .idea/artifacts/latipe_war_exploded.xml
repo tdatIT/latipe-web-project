@@ -4,14 +4,14 @@
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
-        <module>project-web-programming</module>
+        <module>latipe</module>
         <packaging>war</packaging>
       </options>
     </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="project-web-programming" />
+          <element id="module-output" name="latipe" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:5.4.24.Final" />
@@ -40,7 +40,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/latipe-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="project-web-programming/web/Web" />
+      <element id="javaee-facet-resources" facet="latipe/web/Web" />
     </root>
   </artifact>
 </component>

@@ -19,6 +19,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
+          <factory-entry name="latipe" />
           <factory-entry name="noname-a.xml@0" value="4e23156f-4655-4774-94cd-1182c9183176" />
           <factory-entry name="project-web-programming" value="4e23156f-4655-4774-94cd-1182c9183176" />
         </datasource-mapping>
@@ -45,6 +46,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
