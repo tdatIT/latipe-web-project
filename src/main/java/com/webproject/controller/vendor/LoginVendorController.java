@@ -46,14 +46,19 @@ public class LoginVendorController extends HttpServlet {
                 //get user and store by user_id
                 User us = userService.getUserByEmail(email);
                 Store store = storeService.findByOwnId(us.getUserId());
-                //set attb into session
-                session.setAttribute(SessionVar.USER_ID, us.getUserId());
-                session.setAttribute(SessionVar.NAME_USER, us.getLastname());
-                session.setAttribute(SessionVar.ROLE_ID, us.getRoleId());
-                session.setAttribute(SessionVar.STORE_ID, store.getStoreId());
-                session.setAttribute(SessionVar.STORE_OBJ, store);
-                //redirect dashboard page
-                resp.sendRedirect(req.getContextPath() + Router.STORE_D);
+                if (store != null) {
+                    //set attb into session
+                    session.setAttribute(SessionVar.USER_ID, us.getUserId());
+                    session.setAttribute(SessionVar.NAME_USER, us.getLastname());
+                    session.setAttribute(SessionVar.ROLE_ID, us.getRoleId());
+                    session.setAttribute(SessionVar.STORE_ID, store.getStoreId());
+                    session.setAttribute(SessionVar.STORE_OBJ, store);
+                    //redirect dashboard page
+                    resp.sendRedirect(req.getContextPath() + Router.STORE_D);
+                } else {
+                    req.setAttribute("status", 1);
+                    req.getRequestDispatcher(Router.STORE_LOGIN_PAGE).forward(req, resp);
+                }
             } else {
                 req.setAttribute("status", 0);
                 req.getRequestDispatcher(Router.STORE_LOGIN_PAGE).forward(req, resp);

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}/store-admin"></c:set>
 <nav class="navbar navbar-expand justify-content-between fixed-top">
     <a class="navbar-brand mb-0 h1 d-none d-md-block" href="dashboard">
         <img src="${pageContext.request.contextPath}/view/web/assets/img/favicon.png"
@@ -89,11 +91,11 @@
                      class="d-inline-block align-top" alt="">
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Xin chào ${sessionScope.lastname}</a>
-                <a class="dropdown-item" href="#">Thông tin của hàng</a>
+                <a class="dropdown-item" href="info">Xin chào ${sessionScope.lastname}</a>
+                <a class="dropdown-item" href="update-info">Chỉnh sửa thông tin cửa hàng</a>
                 <a class="dropdown-item" href="#">Cài đặt</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                <a class="dropdown-item text-danger" href="logout">Đăng xuất</a>
             </div>
         </li>
     </ul>
@@ -112,7 +114,7 @@
         </li>
 
         <li class="sidebar-nav-item">
-            <a href="${pageContext.request.contextPath}/store-admin/dashboard" class="sidebar-nav-link">
+            <a href="${contextPath}/dashboard" class="sidebar-nav-link">
                     <span class="sidebar-nav-icon">
                         <i data-feather="pie-chart"></i>
                     </span><span class="sidebar-nav-name">Phân tích</span>
@@ -121,7 +123,7 @@
         </li>
 
         <li class="sidebar-nav-item">
-            <a href="${pageContext.request.contextPath}/store-admin/product" class="sidebar-nav-link">
+            <a href="${contextPath}/product" class="sidebar-nav-link">
                     <span class="sidebar-nav-icon">
                         <i data-feather="package"></i>
                     </span><span class="sidebar-nav-name">Sản Phẩm</span>
@@ -130,7 +132,7 @@
         </li>
 
         <li class="sidebar-nav-item">
-            <a href="${pageContext.request.contextPath}/store-admin/order" class="sidebar-nav-link">
+            <a href="${contextPath}/order" class="sidebar-nav-link">
                     <span class="sidebar-nav-icon">
                         <i data-feather="list"></i>
                     </span><span class="sidebar-nav-name">Bán Hàng</span>
@@ -139,7 +141,7 @@
         </li>
 
         <li class="sidebar-nav-item">
-            <a href="store-management.html" class="sidebar-nav-link">
+            <a href="${contextPath}/employee" class="sidebar-nav-link">
             <span class="sidebar-nav-icon">
               <i data-feather="user"></i>
             </span>

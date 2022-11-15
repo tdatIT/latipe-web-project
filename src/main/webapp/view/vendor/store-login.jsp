@@ -60,7 +60,7 @@
                 </form>
             </div>
             <div class="card-footer text-center">
-                <a href="forgot"><small>Đăng Ký Cửa Hàng</small></a>
+                <a href="register-store"><small>Đăng Ký Cửa Hàng</small></a>
             </div>
             <div class="card-footer text-center">
                 <a href="forgot"><small>Forgot your password?</small></a>
