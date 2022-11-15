@@ -20,13 +20,13 @@ public class Store {
     private int ownId;
     @Basic
     @Column(name = "commissionId", nullable = false)
-    private int commissionId;
+    private int commissionId = 1;
     @Basic
     @Column(name = "bio", nullable = false, length = 255)
     private String bio;
     @Basic
     @Column(name = "isActive", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
     @Basic
     @Column(name = "avatar", nullable = true, length = 255)
     private String avatar;
@@ -35,19 +35,19 @@ public class Store {
     private String cover;
     @Basic
     @Column(name = "featured_images", nullable = true, length = 255)
-    private String featuredImages;
+    private String featuredImages = "feature.jpg";
     @Basic
     @Column(name = "point", nullable = true)
-    private Integer point;
+    private Integer point = 0;
     @Basic
     @Column(name = "rating", nullable = true)
-    private Integer rating;
+    private Integer rating = 0;
     @Basic
     @Column(name = "e_wallet", nullable = true, precision = 0)
-    private Double eWallet;
+    private Double eWallet = 0D;
     @Basic
     @Column(name = "createDate", nullable = true)
-    private Date createDate;
+    private Date createDate = new Date(new java.util.Date().getTime());
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
@@ -55,7 +55,7 @@ public class Store {
     private Collection<Orders> ordersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId")
     private Collection<Review> reviewsByStoreId;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ownId", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByOwnId;
     @ManyToOne
@@ -65,10 +65,10 @@ public class Store {
     private StoreLevel storeLevelByStoreId;
     @OneToMany(mappedBy = "storeByStoreEmpId")
     private Collection<User> usersByStoreId;
-    @OneToMany(mappedBy = "storeByStoreId")
+    @OneToMany(mappedBy = "storeByStoreId", fetch = FetchType.LAZY)
     private Collection<UserFollowStore> userFollowStoresByStoreId;
 
-    @OneToMany(mappedBy = "storeByStoreId",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "storeByStoreId", fetch = FetchType.LAZY)
     private Collection<Product> productsByStoreId;
 
     public Collection<Product> getProductsByStoreId() {

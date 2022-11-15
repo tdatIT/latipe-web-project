@@ -3,6 +3,7 @@ package com.webproject.dao.impl;
 import com.webproject.dao.IStoreDAO;
 import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.Store;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -30,6 +31,7 @@ public class StoreDAOImpl implements IStoreDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             store = session.get(Store.class, id);
+            Hibernate.initialize(store.getUserFollowStoresByStoreId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -74,7 +76,7 @@ public class StoreDAOImpl implements IStoreDAO {
     @Override
     public boolean createStore(Store store) {
         boolean status = false;
-        Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
             session.save(store);
