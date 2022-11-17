@@ -1,6 +1,7 @@
 #File config idea
 # Generated files
 .idea/**/contentModel.xml
+*/.idea/*
 #Target folder
 */target/*
 # Sensitive or high-churn files

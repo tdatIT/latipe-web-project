@@ -5,12 +5,19 @@ import com.webproject.dao.impl.UserDAOImpl;
 import com.webproject.model.User;
 import com.webproject.service.IUserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements IUserService {
     private IUsersDAO usersDAO = new UserDAOImpl();
 
     @Override
     public User findById(int id) {
         return usersDAO.findById(id);
+    }
+
+    @Override
+    public List<User> findByStore(int storeId) {
+        return usersDAO.findByStore(storeId);
     }
 
     @Override

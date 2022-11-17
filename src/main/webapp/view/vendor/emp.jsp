@@ -33,13 +33,21 @@
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb adminx-page-breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="#">Quản lý đơn hàng</a></li>
+                        <li class="breadcrumb-item"><a href="#">Quản lý nhân viên</a></li>
                         <li class="breadcrumb-item active  aria-current=" page
                         ">Bảng</li>
                     </ol>
                 </nav>
                 <div class="pb-3">
                     <h1>Tất cả các đơn hàng</h1>
+                </div>
+                <div class="row mt-lg-auto">
+                    <div class="col-lg-8">
+                        <input id="email" type="email">
+                    </div>
+                    <div class="col-lg-4">
+                        <button id="add-btn" class="btn btn-success">Thêm nhân viên</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -56,15 +64,15 @@
                                             </label>
                                         </th>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Người tạo</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Ngày tạo</th>
+                                        <th scope="col">Tên nhân viên</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
                                         <th scope="col">Trạng thái</th>
                                         <th scope="col">Chức năng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${orders}" var="i">
+                                    <c:forEach items="${users}" var="u">
                                         <tr>
                                             <th scope="row">
                                                 <label class="custom-control custom-checkbox m-0 p-0">
@@ -74,30 +82,19 @@
                                                 </label>
                                             </th>
                                             <td>
-                                                    ${i.orderId}
+                                                    ${u.userId}
                                             </td>
-                                            <td>${i.userId}</td>
-                                            <td>${i.amountFromUser.intValue()}</td>
-                                            <td>${i.createDate}</td>
-                                            <c:if test="${i.status eq 1}">
+                                            <td>${u.lastname}</td>
+                                            <td>${u.email}</td>
+                                            <td>${u.phone}</td>
+                                            <c:if test="${u.roleId eq 5}">
                                                 <td>
-                                                    <span class="badge badge-pill badge-primary">Xử lý</span>
-                                                </td>
-                                            </c:if>
-                                            <c:if test="${i.status eq 2}">
-                                                <td>
-                                                    <span class="badge badge-pill badge-danger">Vận chuyển</span>
-                                                </td>
-                                            </c:if>
-                                            <c:if test="${i.status eq 3}">
-                                                <td>
-                                                    <span class="badge badge-pill badge-success">Hoàn tất</span>
+                                                    <span class="badge badge-pill badge-primary">Cộng tác</span>
                                                 </td>
                                             </c:if>
                                             <td>
-                                                <a class="btn btn-sm btn-primary"
-                                                   href="${pageContext.request.contextPath}/store-admin/order-process?orderId=${i.orderId}">Chỉnh
-                                                    sửa</a>
+                                                <a id="remove" class="btn btn-sm btn-primary"
+                                                   data-id="${u.userId}">Xóa</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -140,6 +137,38 @@
           table.search($(this).val()).draw() ;
         }); */
     });
+    $('#add-btn').click(function (e) {
+        let email = $('#email').val();
+
+        if (email.length!=0) {
+            $.ajax({
+                url: 'emp-add',
+                method: 'post',
+                data: {'email': email},
+                error: function (data) {
+                    alert("Không tìm thấy email, thêm thất bại")
+                },
+                success: function () {
+                    location.reload();
+                }
+            })
+        }
+    })
+    $('#remove').click(function (e) {
+        let userId = $('#remove').data("id");
+        $.ajax({
+            url: 'emp-remove',
+            method: 'post',
+            data: {'userId': userId},
+            error: function (data) {
+                alert("Xoá nhân viên thất bại")
+            },
+            success: function () {
+                location.reload();
+            }
+        })
+
+    })
 </script>
 
 <!-- If you prefer vanilla JS these are the only required scripts -->

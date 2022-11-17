@@ -73,64 +73,60 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
-                            <c:if test="${store eq null}">
-                            <form action="register-store" method="post" enctype="multipart/form-data"></c:if>
-                                <c:if test="${store eq null}">
-                                <form action="update-store" method="post" enctype="multipart/form-data"></c:if>
-
-                                    <div class="row">
-                                        <div class="col-md-12 mb-5">
-                                            <h4>Nhập vào thông tin cửa hàng</h4>
-                                        </div>
+                            <form action="register-store" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-12 mb-5">
+                                        <h4>Nhập vào thông tin cửa hàng</h4>
                                     </div>
-                                    <c:if test="${status eq false}">
-                                        <div class="alert alert-danger" role="alert">
-                                            Tạo cửa hàng thất bại, vui lòng nhập lại thông tin
-                                        </div>
-                                    </c:if>
-                                    <!-- 2 column grid layout with text inputs for the first and last names -->
-
-                                    <div class="form-outline mb-4">
-                                        <div class="form-outline">
-                                            <input name="name" type="text" id="form3Example1"
-                                                   class="form-control"
-                                                   placeholder="Tên của hàng" required/>
-                                        </div>
+                                </div>
+                                <c:if test="${status eq false}">
+                                    <div class="alert alert-danger" role="alert">
+                                        Tạo cửa hàng thất bại, vui lòng nhập lại thông tin
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <div class="form-outline">
+                                </c:if>
+                                <!-- 2 column grid layout with text inputs for the first and last names -->
+
+                                <div class="form-outline mb-4">
+                                    <div class="form-outline">
+                                        <input name="name" type="text" id="form3Example1"
+                                               class="form-control"
+                                               placeholder="Tên của hàng" required/>
+                                    </div>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <div class="form-outline">
                                                 <textarea name="bio" type="text" id="form3Example2"
                                                           class="form-control"
                                                           placeholder="Mô tả" required></textarea>
-                                        </div>
                                     </div>
+                                </div>
 
-                                    <!-- Email input -->
-                                    <div class="form-outline mb-4">
-                                        <label>Ảnh bìa</label>
-                                        <input name="cover" type="file" id="form3Example3" class="form-control"
-                                               placeholder="Ảnh bìa của store" minlength="8" required/>
-                                    </div>
-                                    <!-- Password input -->
-                                    <div class="form-outline mb-4">
-                                        <label>Ảnh đại diện</label>
-                                        <input name="avatar" type="file" id="form3Example4" class="form-control"
-                                               placeholder="Ảnh đại điện của cửa hàng" minlength="8" required/>
-                                    </div>
-                                    <!-- Password input -->
-                                    <div class="form-outline mb-4">
-                                        <label>Ảnh đặt trưng</label>
-                                        <input name="featured_image" type="file" id="form3Example5"
-                                               class="form-control"
-                                               placeholder="Ảnh feature" required/>
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                    <label>Ảnh bìa</label>
+                                    <input name="cover" type="file" id="form3Example3" class="form-control"
+                                           placeholder="Ảnh bìa của store" minlength="8" required/>
+                                </div>
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <label>Ảnh đại diện</label>
+                                    <input name="avatar" type="file" id="form3Example4" class="form-control"
+                                           placeholder="Ảnh đại điện của cửa hàng" minlength="8" required/>
+                                </div>
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <label>Ảnh đặt trưng</label>
+                                    <input name="featured_image" type="file" id="form3Example5"
+                                           class="form-control"
+                                           placeholder="Ảnh feature" required/>
 
-                                    </div>
-                                    <!-- Submit button -->
-                                    <button type="submit" class="btn btn-block mb-4"
-                                            style="background-color: #00D852; color: #fff;">
-                                        Đăng ký ngay
-                                    </button>
-                                </form>
+                                </div>
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-block mb-4"
+                                        style="background-color: #00D852; color: #fff;">
+                                    Đăng ký ngay
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -181,6 +177,7 @@
 <!-- Footer Section End -->
 
 <c:import url="footer.jsp"></c:import>
+
 
 
 </body>

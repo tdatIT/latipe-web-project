@@ -64,11 +64,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Tên Khách Hàng</label>
                                     <input class="form-control mb-2" type="text" placeholder="null"
-                                           value="[${user.userId}]:${user.name}" disabled>
+                                           value="[${order.userId}]:${user.userByUserId.lastname}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Địa chỉ giao</label>
-                                    <input class="form-control  mb-2" type="number"
+                                    <input class="form-control  mb-2" type="text"
                                            placeholder="null" value="${order.address}" disabled>
                                 </div>
                                 <div class="form-group">
@@ -123,19 +123,26 @@
                                     <label class="form-label">Số tiền của hàng nhận</label>
                                     <input class="form-control mb-2" type="number"
                                            placeholder="null"
-                                           value="${order.amountToStore.intValue()}">
+                                           value="${order.amountToStore.intValue()}" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Trạng thái xử lý</label>
-                                    <select class="form-control js-choice">
-                                        <option value="1">Hoạt động</option>
-                                        <option value="2">Không hoạt động</option>
+                                    <select class="form-control js-choice" disabled>
+                                        <c:if test="${order.status eq 1}">
+                                            <option value="1" selected>Xử lý</option>
+                                        </c:if>
+                                        <c:if test="${order.status eq 2}">
+                                            <option value="2" selected>Vận chuyển</option>
+                                        </c:if>
+                                        <c:if test="${order.status eq 3}">
+                                            <option value="3" selected>Hoàn thất</option>
+                                        </c:if>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Ngày cập nhật</label>
                                     <input class="form-control mb-2" type="date"
-                                           placeholder="null">${order.updateDate}
+                                           placeholder="${order.updateDate}" disabled>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -195,8 +202,48 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <form action="order-process" method="post">
+                    <div class="card mb-grid">
+                        <div class="card-header">
+                            <div class="card-header-title">Chỉnh sửa trạng thái đơn</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Mã đơn hàng: ${order.orderId}</label>
+                                <input name="orderId" class="form-control mb-2"
+                                       type="number"
+                                       value="${order.orderId}" hidden>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="form-label">Trạng thái thanh toán </label>
+                                <select name="status" class="form-control js-choice">
+                                    <c:if test="${order.status eq 1}">
+                                        <option value="1" selected hidden>Xử lý</option>
+                                    </c:if>
+                                    <c:if test="${order.status eq 2}">
+                                        <option value="2" selected hidden>Vận chuyển</option>
+                                    </c:if>
+                                    <c:if test="${order.status eq 3}">
+                                        <option value="3" selected hidden>Hoàn tất</option>
+                                    </c:if>
+                                    <option value="1">Xử lý</option>
+                                    <option value="2">Vận chuyển</option>
+                                    <option value="3">Hoàn tất</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn-primary btn">Hoàn tất</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+</div>
 </div>
 <!-- // Main Content -->
 </div>

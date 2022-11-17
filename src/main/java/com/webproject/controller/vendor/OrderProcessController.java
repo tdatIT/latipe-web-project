@@ -44,4 +44,26 @@ public class OrderProcessController extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
+        HttpSession session = req.getSession();
+        try {
+            if (req.getParameter("orderId") != null) {
+                Orders order = orderService.findById(
+                        Integer.parseInt(req.getParameter("orderId")));
+                if (order.getStoreId() == (Integer) session.getAttribute(SessionVar.STORE_ID)) {
+                    order.setStatus(Integer.parseInt(req.getParameter("status")));
+                    orderService.updateOrder(order);
+                    resp.sendRedirect(req.getContextPath() + Router.STORE_O);
+                } else
+                    resp.sendRedirect(req.getContextPath() + Router.ERROR404);
+            } else {
+                resp.sendRedirect(req.getContextPath() + Router.STORE_O);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

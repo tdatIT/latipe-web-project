@@ -141,4 +141,20 @@ public class UserDAOImpl implements IUsersDAO {
     public boolean updateRole(int id, int role_id) {
         return false;
     }
+
+    @Override
+    public List<User> findByStore(int storeId) {
+        String HQL = "from User u where u.storeEmpId=:storeId";
+        List<User> users = new ArrayList<>();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            users = session.createQuery(HQL).setParameter("storeId", storeId)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return users;
+    }
 }
