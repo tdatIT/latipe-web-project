@@ -95,7 +95,7 @@
                 <a class="dropdown-item" href="update-info">Chỉnh sửa thông tin cửa hàng</a>
                 <a class="dropdown-item" href="#">Cài đặt</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="logout">Đăng xuất</a>
+                <a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
             </div>
         </li>
     </ul>
@@ -113,14 +113,6 @@
             </a>
         </li>
 
-        <li class="sidebar-nav-item">
-            <a href="${contextPath}/dashboard" class="sidebar-nav-link">
-                    <span class="sidebar-nav-icon">
-                        <i data-feather="pie-chart"></i>
-                    </span><span class="sidebar-nav-name">Phân tích</span>
-                <span class="sidebar-nav-end"></span>
-            </a>
-        </li>
 
         <li class="sidebar-nav-item">
             <a href="${contextPath}/product" class="sidebar-nav-link">

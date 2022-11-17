@@ -53,10 +53,10 @@
                                                 <h4>${store.name}</h4>
                                                 <p class="text-secondary mb-1">
                                                     <c:if test="${store.isActive() eq true}">
-                                                        <span class="badge bg-primary">Hoạt động</span>
+                                                        <span class="badge bg-primary text-white">Hoạt động</span>
                                                     </c:if>
                                                     <c:if test="${store.isActive() ne true}">
-                                                        <span class="badge bg-danger">Ngừng</span>
+                                                        <span class="badge bg-danger text-white">Ngừng</span>
                                                     </c:if>
                                                 </p>
                                                 <p class="text-muted font-size-sm">Ngày tạo: ${store.createDate}</p>
@@ -126,43 +126,157 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Tên cửa hàng</h6>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                ${store.name}
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0"> Số điện thoại</h6>
-                                            </div>
-                                            <div class="col-sm-9 text-secondary">
+                                    <c:if test="${update eq null}">
+                                        <div class="card-body">
+                                            <div class="row">
                                                 <div class="col-sm-3">
-                                                    ${user.phone}
+                                                    <h6 class="mb-0">Tên cửa hàng</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                        ${store.name}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mô tả thông tin</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <div style="width: 400px">
+                                                        <div style="width: 400px">
+                                                                ${store.bio}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0"> Số điện thoại</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                        ${user.phone}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0"> Email</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                        ${user.email}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0"> Loại hoa hồng</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                        ${store.commissionByCommissionId.name}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <a class="btn btn-info " target="__blank"
+                                                       href="update-info">Cập nhật thông tin</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0"> Email</h6>
+                                    </c:if>
+                                    <c:if test="${update eq true}">
+                                        <div class="card-body">
+                                            <form action="update-info" method="post">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Tên cửa hàng</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <input name="name" type="text" value="${store.name}">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Mô tả thông tin</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <textarea name="bio" type="text"
+                                                                  style="width: 400px">${store.bio}</textarea>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Số điện thoại</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <input name="phone" type="text" value="${user.phone}">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Email</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <input name="email" type="email" value=" ${user.email}">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0"> Trạng thái</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <select name="active">
+                                                            <option value="true" selected>Hoạt động</option>
+                                                            <option value="false">Ngừng hoạt động</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <button class="btn btn-info" type="submit">Cập nhật thông
+                                                            tin
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0"> Ảnh đại diện</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <form id="change-avatar" method="post"
+                                                          enctype="multipart/form-data">
+                                                        <input name="avatar" type="file">
+                                                        <button class="btn btn-primary" type="submit">Thay đổi
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                ${user.email}
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0"> Ảnh bìa</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <form id="change-cover" method="post"
+                                                          enctype="multipart/form-data">
+                                                        <input name="cover" type="file">
+                                                        <button class="btn btn-primary" type="submit">Thay đổi
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
+                                            <hr>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <a class="btn btn-info " target="__blank"
-                                                   href="store-update">Cập nhật thông tin</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:if>
+
                                 </div>
 
                                 <div class="row gutters-sm">
@@ -321,6 +435,24 @@
           table.search($(this).val()).draw() ;
         }); */
     });
+
+    $("form#change-avatar, form#change-cover").submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        alert("chạy")
+        $.ajax({
+            url: 'upload-image-store',
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                alert('Cập nhật thành công !')
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+
 </script>
 
 <!-- If you prefer vanilla JS these are the only required scripts -->

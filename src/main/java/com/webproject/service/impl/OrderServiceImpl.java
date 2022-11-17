@@ -6,7 +6,10 @@ import com.webproject.model.Orders;
 import com.webproject.service.IOrderService;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class OrderServiceImpl implements IOrderService {
     private IOrderDAO orderDAO = new OrderDAOImpl();
@@ -49,5 +52,35 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean cancelOrder(int id) {
         return orderDAO.cancelOrder(id);
+    }
+
+    @Override
+    public Map<Integer, Long> totalOrdersFromStore5Month(int shopId, Date date) {
+        List<Objects[]> list = orderDAO.totalOrdersFromStore5Month(shopId, date);
+        Map<Integer, Long> data = new HashMap<>();
+        for (Object[] o : list) {
+            data.put((Integer) o[0], (Long) o[1]);
+        }
+        return data;
+    }
+
+    @Override
+    public Map<Integer, Double> totalAmountsFromStore5Month(int storeId, Date date) {
+        List<Objects[]> list = orderDAO.totalAmountsFromStore5Month(storeId, date);
+        Map<Integer, Double> data = new HashMap<>();
+        for (Object[] o : list) {
+            data.put((Integer) o[0], (Double) o[1]);
+        }
+        return data;
+    }
+
+    @Override
+    public Map<String, Long> totalProductInMonth(int storeId, Date date) {
+        List<Objects[]> list = orderDAO.totalProductInMonth(storeId, date);
+        Map<String, Long> data = new HashMap<>();
+        for (Object[] o : list) {
+            data.put((String) o[0], (Long) o[1]);
+        }
+        return data;
     }
 }

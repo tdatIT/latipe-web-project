@@ -9,7 +9,14 @@
 
 D:/Work Or Study/Java/Intelij Project/project-web-programming/src/main/resources/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost/final_web_project</jdbc-url>
+      <jdbc-url>jdbc:mysql://34.87.14.0/final_web_project</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="final_web_project@34.87.14.0" uuid="e68f1d0b-e260-4dea-96c8-7053d0d96cd3">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://34.87.14.0:3306/final_web_project</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -51,7 +51,7 @@ public class Orders {
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByUserId;
     @ManyToOne
@@ -218,5 +218,11 @@ public class Orders {
 
     public void setOrderItemsByOrderId(Collection<OrderItems> orderItemsByOrderId) {
         this.orderItemsByOrderId = orderItemsByOrderId;
+    }
+
+    @Override
+    public String toString() {
+        return orderId + ", \n"
+                + createDate + ",\n";
     }
 }
