@@ -8,6 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,5 +143,41 @@ public class UserDAOImpl implements IUsersDAO {
     @Override
     public boolean updateRole(int id, int role_id) {
         return false;
+    }
+
+    @Override
+    public List<User> getStatistic(String option, LocalDate date) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Criteria cr = session.createCriteria(User.class);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
+        switch (option) {
+            case "0": {
+                LocalDate fromDate = LocalDate.parse(date.getYear() + "-01-01" + " 00:00:00");
+                LocalDate toDate = LocalDate.parse(date.getYear() + "-12-31" + " 23:59:59");
+                cr.add(Restrictions.between("createDate", fromDate, toDate));
+            }
+            case "1": {
+                LocalDate fromDate = LocalDate.parse(date.getYear() + "-" + date.getMonth() + "-01" + " 00:00:00");
+                LocalDate toDate = LocalDate.parse((date.getYear() + "-" + date.getMonth() + 1 + "-01" + " 00:00:00"));
+                cr.add(Restrictions.between("createDate", fromDate, toDate));
+            }
+            case "2": {
+                cr.add(Restrictions.between("createDate", date.minusDays(7), date));
+            }
+            case "3": {
+                cr.add(Restrictions.between("createDate", date.minusDays(1), date));
+            }
+        }
+        List<User> results = null;
+        try {
+            results = cr.list();
+        } catch (Exception e) {
+            //roll back trans when insert failed
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
     }
 }

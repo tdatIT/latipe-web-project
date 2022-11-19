@@ -1,7 +1,9 @@
 package com.webproject.dao;
 
 import com.webproject.model.Product;
+import com.webproject.model.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IProductDAO {
@@ -23,5 +25,5 @@ public interface IProductDAO {
 
     boolean disableProduct(int id);
 
-
+    List<Product> getStatistic(String option, LocalDate date) ;
 }

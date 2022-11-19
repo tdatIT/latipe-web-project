@@ -5,6 +5,9 @@ import com.webproject.dao.impl.UserDAOImpl;
 import com.webproject.model.User;
 import com.webproject.service.IUserService;
 
+import java.util.Date;
+import java.util.List;
+
 public class UserServiceImpl implements IUserService {
     private IUsersDAO usersDAO = new UserDAOImpl();
 
@@ -36,5 +39,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean disableUser(int id) {
         return usersDAO.disableUser(id);
+    }
+
+    @Override
+    public List<User> getStatistic(int option, Date date) {
+        return null;
     }
 }

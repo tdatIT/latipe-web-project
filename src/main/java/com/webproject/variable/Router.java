@@ -21,8 +21,10 @@ public class Router {
     public static final String S_ORDER_P = "view/vendor/order-detail.jsp";
     public static final String S_EMP_M = "view/vendor/store-emp.jsp";
     public static final String S_ANALYTICS_M = "view/vendor/store-analytics.jsp";
-    //Page for admin
 
+
+    //Page for admin
+    public static final String ADMIN_DASHBOARD = "view/admin/index.jsp";
 
     //URL Servlet Mapping
     //User

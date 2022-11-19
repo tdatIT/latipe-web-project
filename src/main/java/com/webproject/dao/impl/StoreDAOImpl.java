@@ -3,9 +3,14 @@ package com.webproject.dao.impl;
 import com.webproject.dao.IStoreDAO;
 import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.Store;
+import com.webproject.model.Store;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 public class StoreDAOImpl implements IStoreDAO {
@@ -124,5 +129,40 @@ public class StoreDAOImpl implements IStoreDAO {
             session.close();
         }
         return status;
+    }
+    @Override
+    public List<Store> getStatistic(String option, LocalDate date) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Criteria cr = session.createCriteria(Store.class);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
+        switch (option) {
+            case "0": {
+                LocalDate fromDate = LocalDate.parse(date.getYear() + "-01-01" + " 00:00:00");
+                LocalDate toDate = LocalDate.parse(date.getYear() + "-12-31" + " 23:59:59");
+                cr.add(Restrictions.between("createDate", fromDate, toDate));
+            }
+            case "1": {
+                LocalDate fromDate = LocalDate.parse(date.getYear() + "-" + date.getMonth() + "-01" + " 00:00:00");
+                LocalDate toDate = LocalDate.parse((date.getYear() + "-" + date.getMonth() + 1 + "-01" + " 00:00:00"));
+                cr.add(Restrictions.between("createDate", fromDate, toDate));
+            }
+            case "2": {
+                cr.add(Restrictions.between("createDate", date.minusDays(7), date));
+            }
+            case "3": {
+                cr.add(Restrictions.between("createDate", date.minusDays(1), date));
+            }
+        }
+        List<Store> results = null;
+        try {
+            results = cr.list();
+        } catch (Exception e) {
+            //roll back trans when insert failed
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
     }
 }
