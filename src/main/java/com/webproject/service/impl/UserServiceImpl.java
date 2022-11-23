@@ -6,6 +6,9 @@ import com.webproject.model.User;
 import com.webproject.service.IUserService;
 
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.HashMap;
 
 public class UserServiceImpl implements IUserService {
     private IUsersDAO usersDAO = new UserDAOImpl();
@@ -14,12 +17,10 @@ public class UserServiceImpl implements IUserService {
     public User findById(int id) {
         return usersDAO.findById(id);
     }
-
     @Override
     public List<User> findByStore(int storeId) {
         return usersDAO.findByStore(storeId);
     }
-
     @Override
     public boolean validate(String email, String password) {
         return usersDAO.validate(email, password);
@@ -43,5 +44,21 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean disableUser(int id) {
         return usersDAO.disableUser(id);
+    }
+    @Override
+    public List<User> getStatistic(String option, LocalDate date) {
+        return usersDAO.getStatistic(option, date);
+    }
+    @Override
+    public HashMap<Integer, Object> paginate(String search, int option, int page) {
+        return usersDAO.paginate(search, option, page);
+    }
+    @Override
+    public boolean setStatus(int id, boolean status) {
+        return usersDAO.setStatus(id, status);
+    }
+    @Override
+    public List<User> findAll() {
+        return usersDAO.findAll();
     }
 }

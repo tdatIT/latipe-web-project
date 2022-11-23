@@ -3,6 +3,8 @@ package com.webproject.service;
 import com.webproject.model.Orders;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +30,10 @@ public interface IOrderService {
     Map<Integer, Double> totalAmountsFromStore5Month(int storeId, Date date);
 
     Map<String, Long> totalProductInMonth(int storeId, Date date);
+
+    List<Orders> getStatistic(String option, LocalDate date);
+
+    public HashMap<Integer, Object> paginate(String search, int page, int status);
+
+    public boolean setStatus(int id, int status);
 }

@@ -1,7 +1,12 @@
 package com.webproject.dao;
 
 import com.webproject.model.Product;
+import com.webproject.model.Store;
+import com.webproject.model.User;
 
+import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IProductDAO {
@@ -23,5 +28,10 @@ public interface IProductDAO {
 
     boolean disableProduct(int id);
 
+    List<Product> getStatistic(String option, LocalDate date) ;
+
+    public HashMap<Integer, Object > paginate(String search, int page,int option);
+
+    public boolean setStatus(int id, boolean status);
 
 }

@@ -25,7 +25,7 @@ public class Router {
     public static final String S_CREATE_PAGE = "view/web/store-register.jsp";
     public static final String S_UPDATE_INF_PAGE = "view/vendor/store-update.jsp";
     //Page for admin
-
+    public static final String ADMIN_DASHBOARD = "view/admin/index.jsp";
 
     //URL Servlet Mapping
     //User
@@ -51,6 +51,7 @@ public class Router {
     public static final String STORE_O_D = "/store-admin/order-delete";
     public static final String STORE_E = "/store-admin/employee";
     public static final String STORE_A = "/store-admin/analytics";
+
     public static final String STORE_INFO = "/store-admin/info";
     public static final String STORE_CREATE = "/register-store";
     public static final String STORE_UPDATE = "/store-admin/update-info";

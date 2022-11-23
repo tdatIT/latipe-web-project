@@ -18,6 +18,7 @@ public class User {
     @Basic
     @Column(name = "firstname", nullable = false, length = 255)
     private String firstname;
+
     @Basic
     @Column(name = "lastname", nullable = false, length = 255)
     private String lastname;

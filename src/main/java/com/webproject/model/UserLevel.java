@@ -23,10 +23,10 @@ public class UserLevel {
     private Double discount;
     @Basic
     @Column(name = "isDelete", nullable = true)
-    private Boolean isDelete;
+    private Boolean isDelete= false;
     @Basic
     @Column(name = "createDate", nullable = true)
-    private Date createDate;
+    private Date createDate = new Date(new java.util.Date().getTime());
     @OneToMany(mappedBy = "userLevelByUserLevelId")
     private Collection<User> usersByUserLevelId;
 

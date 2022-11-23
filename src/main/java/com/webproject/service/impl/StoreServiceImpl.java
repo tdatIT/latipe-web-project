@@ -3,8 +3,12 @@ package com.webproject.service.impl;
 import com.webproject.dao.IStoreDAO;
 import com.webproject.dao.impl.StoreDAOImpl;
 import com.webproject.model.Store;
+import com.webproject.model.User;
 import com.webproject.service.IStoreService;
 
+import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class StoreServiceImpl implements IStoreService {
@@ -43,5 +47,18 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public boolean disableStore(int id) {
         return storeDAO.disableStore(id);
+    }
+    @Override
+    public List<Store> getStatistic(String option, LocalDate date) {
+        return storeDAO.getStatistic(option, date);
+    }
+
+    @Override
+    public HashMap<Integer, Object> paginate(String search, int option, int page) {
+        return storeDAO.paginate(search, option, page);
+    }
+    @Override
+    public boolean setStatus(int id, boolean status) {
+        return storeDAO.setStatus(id, status);
     }
 }
