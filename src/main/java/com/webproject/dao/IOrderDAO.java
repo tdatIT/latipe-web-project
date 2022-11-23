@@ -36,5 +36,5 @@ public interface IOrderDAO {
 
     public HashMap<Integer, Object> paginate(String search, int page, int status);
 
-    public boolean setStatus(int id, int stat
+    public boolean setStatus(int id, int status);
 }

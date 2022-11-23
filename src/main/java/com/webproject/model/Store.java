@@ -55,7 +55,7 @@ public class Store {
     private Collection<Orders> ordersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId")
     private Collection<Review> reviewsByStoreId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ownId", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByOwnId;
     @ManyToOne(fetch = FetchType.EAGER)
