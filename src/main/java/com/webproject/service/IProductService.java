@@ -2,6 +2,8 @@ package com.webproject.service;
 
 import com.webproject.model.Product;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IProductService {
@@ -22,4 +24,10 @@ public interface IProductService {
     boolean updateProduct(Product product);
 
     boolean disableProduct(int id);
+
+    List<Product> getStatistic(String option, LocalDate date);
+
+    public HashMap<Integer, Object> paginate(String search, int page, int option);
+
+    public boolean setStatus(int id, boolean status);
 }

@@ -40,7 +40,7 @@ public class Router {
     public static final String STORE = "/store";
     public static final String STORE_LOGIN = "/store-admin-login";
     public static final String STORE_FILTER = "/store-admin";
-    public static final String STORE_D = "/store-admin/dashboard";
+    public static final String STORE_D = "/admin-dashboard";
     public static final String STORE_P = "/store-admin/product";
     public static final String S_PRODUCT_C = "/store-admin/product-create";
     public static final String S_PRODUCT_U = "/store-admin/product-update";

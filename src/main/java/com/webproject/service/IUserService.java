@@ -2,11 +2,13 @@ package com.webproject.service;
 
 import com.webproject.model.User;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IUserService {
     User findById(int id);
+
     boolean validate(String email, String password);
 
     User getUserByEmail(String email);
@@ -17,5 +19,12 @@ public interface IUserService {
 
     boolean disableUser(int id);
 
-    List<User> getStatistic(int option, Date date);
+    List<User> findAll();
+
+    List<User> getStatistic(String option, LocalDate date);
+
+    public HashMap<Integer, Object> paginate(String search, int option, int page);
+
+    public boolean setStatus(int id, boolean status);
+
 }

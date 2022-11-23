@@ -1,13 +1,14 @@
 package com.webproject.dao;
 
 import com.webproject.model.Category;
+import com.webproject.model.Delivery;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ICategoryDAO {
     List<Category> findAll();
 
-    List<Category> findByParentId(int id);
 
     Category findById(int id);
 
@@ -18,4 +19,5 @@ public interface ICategoryDAO {
     boolean updateCategory(Category category);
 
     boolean disableCategory(int id);
+    public HashMap<Integer, Object > paginate(String search, int page, int option);
 }

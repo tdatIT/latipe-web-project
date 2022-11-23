@@ -6,6 +6,8 @@ import com.webproject.model.Orders;
 import com.webproject.service.IOrderService;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class OrderServiceImpl implements IOrderService {
@@ -49,5 +51,20 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean cancelOrder(int id) {
         return orderDAO.cancelOrder(id);
+    }
+
+    @Override
+    public List<Orders> getStatistic(String option, LocalDate date) {
+        return orderDAO.getStatistic(option, date);
+    }
+
+    @Override
+    public HashMap<Integer, Object> paginate(String search, int page, int status) {
+        return orderDAO.paginate(search, page, status);
+    }
+
+    @Override
+    public boolean setStatus(int id, int status) {
+        return orderDAO.setStatus(id, status);
     }
 }

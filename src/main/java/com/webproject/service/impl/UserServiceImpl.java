@@ -5,7 +5,9 @@ import com.webproject.dao.impl.UserDAOImpl;
 import com.webproject.model.User;
 import com.webproject.service.IUserService;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserServiceImpl implements IUserService {
@@ -42,7 +44,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> getStatistic(int option, Date date) {
-        return null;
+    public List<User> getStatistic(String option, LocalDate date) {
+        return usersDAO.getStatistic(option, date);
+    }
+    @Override
+    public HashMap<Integer, Object> paginate(String search, int option, int page) {
+        return usersDAO.paginate(search, option, page);
+    }
+    @Override
+    public boolean setStatus(int id, boolean status) {
+         return usersDAO.setStatus(id, status);
+    }
+    @Override
+    public List<User> findAll() {
+        return usersDAO.findAll();
     }
 }

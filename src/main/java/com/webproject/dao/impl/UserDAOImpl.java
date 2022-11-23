@@ -8,10 +8,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.persistence.Query;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserDAOImpl implements IUsersDAO {
@@ -51,6 +54,20 @@ public class UserDAOImpl implements IUsersDAO {
             session.close();
         }
         return status;
+    }
+
+    @Override
+    public List<User> findAll() {
+        List<User> users = null;
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            users = session.createQuery("SELECT a FROM User a", User.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return users;
     }
 
     @Override
@@ -149,24 +166,25 @@ public class UserDAOImpl implements IUsersDAO {
     public List<User> getStatistic(String option, LocalDate date) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Criteria cr = session.createCriteria(User.class);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
         switch (option) {
             case "0": {
-                LocalDate fromDate = LocalDate.parse(date.getYear() + "-01-01" + " 00:00:00");
-                LocalDate toDate = LocalDate.parse(date.getYear() + "-12-31" + " 23:59:59");
+                Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date toDate = Date.from(LocalDate.parse(date.getYear() + 1 + "-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
+                break;
             }
             case "1": {
-                LocalDate fromDate = LocalDate.parse(date.getYear() + "-" + date.getMonth() + "-01" + " 00:00:00");
-                LocalDate toDate = LocalDate.parse((date.getYear() + "-" + date.getMonth() + 1 + "-01" + " 00:00:00"));
+                Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
+
+                break;
             }
             case "2": {
-                cr.add(Restrictions.between("createDate", date.minusDays(7), date));
-            }
-            case "3": {
-                cr.add(Restrictions.between("createDate", date.minusDays(1), date));
+                cr.add(Restrictions.between("createDate", Date.from(date.minusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+                break;
             }
         }
         List<User> results = null;
@@ -178,6 +196,64 @@ public class UserDAOImpl implements IUsersDAO {
         } finally {
             session.close();
         }
+        return results;
+    }
+    @Override
+    public boolean setStatus(int id, boolean status) {
+        Transaction tx = null;
+        boolean status1 = false;
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            User user = session.get(User.class, id);
+            tx = session.beginTransaction();
+            user.setDeleted(status);
+            session.update(user);
+            tx.commit();
+            status1 = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return status1;
+    }
+
+    @Override
+    public HashMap<Integer, Object> paginate(String search, int option, int page) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<User> data = null;
+        int count = 0;
+        try {
+            //get paginate
+//            Criteria criteria = session.createCriteria(User.class);
+            Query q;
+            if (option != 0) {
+                q = session.createQuery("from User where isDeleted=:status and concat(firstname, lastname) like :search");
+                q.setParameter("status", option == 1 ? false : true);
+            } else {
+                q = session.createQuery("from User where concat(firstname, lastname) like :search");
+            }
+            q.setMaxResults(10 * page + 10);
+            q.setFirstResult(10 * page);
+            q.setParameter("search", "%" + search + "%");
+            data = q.getResultList();
+
+            //count
+            if (option != 0) {
+                q = session.createQuery("from User where isDeleted=:status and concat(firstname, lastname) like :search");
+                q.setParameter("status", option == 1 ? false : true);
+            } else {
+                q = session.createQuery("from User where concat(firstname, lastname) like :search");
+            }
+            q.setParameter("search", "%" + search + "%");
+            count = q.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        HashMap<Integer, Object> results = new HashMap<Integer, Object>();
+        results.put(count, data);
         return results;
     }
 }

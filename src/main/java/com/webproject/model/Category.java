@@ -14,7 +14,7 @@ public class Category {
     private int categoryId;
     @Basic
     @Column(name = "parent_category_id", nullable = true)
-    private Integer parentCategoryId;
+    private Integer parentCategoryId = null;
     @Basic
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -23,18 +23,18 @@ public class Category {
     private String image;
     @Basic
     @Column(name = "isDeleted", nullable = true)
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
     @Basic
     @Column(name = "createDate", nullable = false)
-    private Date createDate;
+    private Date createDate= new Date(new java.util.Date().getTime());
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
-    @ManyToOne
-    @JoinColumn(name = "parent_category_id", referencedColumnName = "category_id", insertable=false, updatable=false)
-    private Category categoryByParentCategoryId;
-    @OneToMany(mappedBy = "categoryByParentCategoryId")
-    private Collection<Category> categoriesByCategoryId;
+//    @ManyToOne
+//    @JoinColumn(name = "parent_category_id", referencedColumnName = "category_id", insertable=false, updatable=false)
+//    private Category categoryByParentCategoryId;
+//    @OneToMany(mappedBy = "categoryByParentCategoryId")
+//    private Collection<Category> categoriesByCategoryId;
     @OneToMany(mappedBy = "categoryByCategoryId")
     private Collection<Product> productsByCategoryId;
 
@@ -46,13 +46,13 @@ public class Category {
         this.categoryId = categoryId;
     }
 
-    public Integer getParentCategoryId() {
-        return parentCategoryId;
-    }
+//    public Integer getParentCategoryId() {
+//        return parentCategoryId;
+//    }
 
-    public void setParentCategoryId(Integer parentCategoryId) {
-        this.parentCategoryId = parentCategoryId;
-    }
+//    public void setParentCategoryId(Integer parentCategoryId) {
+//        this.parentCategoryId = parentCategoryId;
+//    }
 
     public String getName() {
         return name;
@@ -99,29 +99,29 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return categoryId == category.categoryId && Objects.equals(parentCategoryId, category.parentCategoryId) && Objects.equals(name, category.name) && Objects.equals(image, category.image) && Objects.equals(isDeleted, category.isDeleted) && Objects.equals(createDate, category.createDate) && Objects.equals(updateDate, category.updateDate);
+        return categoryId == category.categoryId && Objects.equals(name, category.name) && Objects.equals(image, category.image) && Objects.equals(isDeleted, category.isDeleted) && Objects.equals(createDate, category.createDate) && Objects.equals(updateDate, category.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(categoryId, parentCategoryId, name, image, isDeleted, createDate, updateDate);
+        return Objects.hash(categoryId, name, image, isDeleted, createDate, updateDate);
     }
 
-    public Category getCategoryByParentCategoryId() {
-        return categoryByParentCategoryId;
-    }
+//    public Category getCategoryByParentCategoryId() {
+//        return categoryByParentCategoryId;
+//    }
+//
+//    public void setCategoryByParentCategoryId(Category categoryByParentCategoryId) {
+//        this.categoryByParentCategoryId = categoryByParentCategoryId;
+//    }
 
-    public void setCategoryByParentCategoryId(Category categoryByParentCategoryId) {
-        this.categoryByParentCategoryId = categoryByParentCategoryId;
-    }
-
-    public Collection<Category> getCategoriesByCategoryId() {
-        return categoriesByCategoryId;
-    }
-
-    public void setCategoriesByCategoryId(Collection<Category> categoriesByCategoryId) {
-        this.categoriesByCategoryId = categoriesByCategoryId;
-    }
+//    public Collection<Category> getCategoriesByCategoryId() {
+//        return categoriesByCategoryId;
+//    }
+//
+//    public void setCategoriesByCategoryId(Collection<Category> categoriesByCategoryId) {
+//        this.categoriesByCategoryId = categoriesByCategoryId;
+//    }
 
     public Collection<Product> getProductsByCategoryId() {
         return productsByCategoryId;

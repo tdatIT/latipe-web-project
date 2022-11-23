@@ -1,5 +1,7 @@
 package com.webproject.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
@@ -23,10 +25,12 @@ public class Commission {
     private String description;
     @Basic
     @Column(name = "isDeleted", nullable = true)
-    private Boolean isDeleted;
+
+    private Boolean isDeleted = false;
+
     @Basic
-    @Column(name = "createDate", nullable = false)
-    private Date createDate;
+    @Column(name = "createDate", nullable = false, updatable = false)
+    private Date createDate = new Date(new java.util.Date().getTime());
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;

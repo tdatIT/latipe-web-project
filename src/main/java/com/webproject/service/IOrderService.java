@@ -3,6 +3,8 @@ package com.webproject.service;
 import com.webproject.model.Orders;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IOrderService {
@@ -21,4 +23,10 @@ public interface IOrderService {
     boolean updateOrder(Orders orders);
 
     boolean cancelOrder(int id);
+
+    List<Orders> getStatistic(String option, LocalDate date);
+
+    public HashMap<Integer, Object> paginate(String search, int page, int status);
+
+    public boolean setStatus(int id, int status);
 }

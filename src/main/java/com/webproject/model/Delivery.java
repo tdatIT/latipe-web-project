@@ -23,10 +23,10 @@ public class Delivery {
     private String description;
     @Basic
     @Column(name = "isDeleted", nullable = true)
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
     @Basic
     @Column(name = "createDate", nullable = false)
-    private Date createDate;
+    private Date createDate = new Date(new java.util.Date().getTime());
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;

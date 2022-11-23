@@ -5,6 +5,7 @@ import com.webproject.dao.impl.CategoryDAOImpl;
 import com.webproject.model.Category;
 import com.webproject.service.ICategoryService;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CategoryServiceImpl implements ICategoryService {
@@ -15,10 +16,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryDAO.findAll();
     }
 
-    @Override
-    public List<Category> findByParentId(int id) {
-        return categoryDAO.findByParentId(id);
-    }
+
 
     @Override
     public Category findById(int id) {
@@ -44,4 +42,5 @@ public class CategoryServiceImpl implements ICategoryService {
     public boolean disableCategory(int id) {
         return categoryDAO.disableCategory(id);
     }
+    public HashMap<Integer, Object > paginate(String search,int option, int page){ return categoryDAO.paginate(search,option, page);}
 }

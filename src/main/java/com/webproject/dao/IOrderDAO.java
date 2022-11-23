@@ -1,10 +1,13 @@
 package com.webproject.dao;
 
 import com.webproject.model.Orders;
+import com.webproject.model.Product;
 import com.webproject.model.User;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface IOrderDAO {
@@ -25,4 +28,8 @@ public interface IOrderDAO {
 
     boolean cancelOrder(int id);
     List<Orders> getStatistic(String option, LocalDate date) ;
+
+    public HashMap<Integer, Object > paginate(String search, int page, int status);
+
+    public boolean setStatus(int id, int status);
 }
