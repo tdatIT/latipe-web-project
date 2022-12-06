@@ -69,7 +69,6 @@ public class StoreLevelDAOImpl implements IStoreLevelDAO {
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            storeLevel.setCreateDate(new Date(new java.util.Date().getTime()));
             session.save(storeLevel);
             tx.commit();
             return  true;

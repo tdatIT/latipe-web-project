@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/admin/product", "/admin/product/create", "/admin/product/update",
+@WebServlet(urlPatterns = {"/admin/product", "/admin/product/active", "/admin/product/update",
         "/admin/product/edit", "/admin/product/delete"})
 public class ProductController extends HttpServlet {
     IProductService com = new ProductServiceImpl();
