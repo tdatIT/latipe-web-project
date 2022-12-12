@@ -57,6 +57,7 @@ public class ProductDAOImpl implements IProductDAO {
     @Override
     public List<Product> findByCategoryId(int id) {
         List<Product> products = null;
+
         String HQL = "from Product where categoryId = :id";
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
