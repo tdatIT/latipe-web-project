@@ -133,13 +133,15 @@ public class CategoryDAOImpl implements ICategoryDAO {
         try {
             //get paginate
             Criteria criteria = session.createCriteria(Category.class);
+            // 1 trang co 10 record
+            // trang 2 lay max 20 record bo ua 10 record dau tien
             criteria.setMaxResults(10 * page + 10);
             criteria.setFirstResult(10 * page);
             if (option == 1)
                 criteria.add(Restrictions.eq("isDeleted", false));
             else if (option == 2)
                 criteria.add(Restrictions.eq("isDeleted", true));
-            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
+            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE)); // ==  name like N'data'
             data = criteria.list();
 
             //count

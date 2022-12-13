@@ -29,7 +29,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/admin"})
 public class DashboardController extends HttpServlet {
 
-    IUserService userService = new UserServiceImpl();
+        IUserService userService = new UserServiceImpl();
     IStoreService storeService = new StoreServiceImpl();
     IOrderService orderService = new OrderServiceImpl();
     IProductService prodService = new ProductServiceImpl();

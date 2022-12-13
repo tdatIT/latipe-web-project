@@ -56,7 +56,9 @@ public class UserController extends HttpServlet {
             int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 0;
             HashMap<Integer, Object> list = com.paginate(search, option, page);
 
+            // lay toan bo danh sach user
             Map.Entry<Integer, Object> entry = list.entrySet().iterator().next();
+            // lay ra tong so trang
             int size = entry.getKey();
             List<User> users = (List<User>) entry.getValue();
 
@@ -69,6 +71,7 @@ public class UserController extends HttpServlet {
             req.setAttribute("tag", page);
             req.setAttribute("search", search);
             req.setAttribute("option", option);
+
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Error: " + e.getMessage());
