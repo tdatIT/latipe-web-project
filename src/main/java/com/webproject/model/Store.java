@@ -58,11 +58,13 @@ public class Store {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ownId", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByOwnId;
+
+    @ManyToOne
+    @JoinColumn(name = "store_level_id")
+    private StoreLevel storeLevel;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "commissionId", referencedColumnName = "commissionId", nullable = false, insertable = false, updatable = false)
     private Commission commissionByCommissionId;
-    @OneToOne(mappedBy = "storeByStoreId")
-    private StoreLevel storeLevelByStoreId;
     @OneToMany(mappedBy = "storeByStoreEmpId")
     private Collection<User> usersByStoreId;
     @OneToMany(mappedBy = "storeByStoreId", fetch = FetchType.LAZY)
@@ -236,13 +238,6 @@ public class Store {
         this.commissionByCommissionId = commissionByCommissionId;
     }
 
-    public StoreLevel getStoreLevelByStoreId() {
-        return storeLevelByStoreId;
-    }
-
-    public void setStoreLevelByStoreId(StoreLevel storeLevelByStoreId) {
-        this.storeLevelByStoreId = storeLevelByStoreId;
-    }
 
     public Collection<User> getUsersByStoreId() {
         return usersByStoreId;
@@ -258,5 +253,13 @@ public class Store {
 
     public void setUserFollowStoresByStoreId(Collection<UserFollowStore> userFollowStoresByStoreId) {
         this.userFollowStoresByStoreId = userFollowStoresByStoreId;
+    }
+
+    public StoreLevel getStoreLevel() {
+        return storeLevel;
+    }
+
+    public void setStoreLevel(StoreLevel storeLevel) {
+        this.storeLevel = storeLevel;
     }
 }

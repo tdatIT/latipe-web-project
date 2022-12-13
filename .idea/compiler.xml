@@ -9,8 +9,5 @@
         <module name="latipe" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="latipe" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
