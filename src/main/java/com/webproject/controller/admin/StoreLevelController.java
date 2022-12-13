@@ -111,7 +111,7 @@ public class StoreLevelController extends HttpServlet {
             throws ServletException, IOException {
         try {
 
-            String storeLevelId = req.getParameter("storeId");
+            String storeLevelId = req.getParameter("storeLevelId");
             com.disableStoreLevel(Integer.parseInt(storeLevelId));
             req.setAttribute("message", "Đã xóa thành công");
 

@@ -2,6 +2,7 @@ package com.webproject.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -9,8 +10,8 @@ import java.util.Objects;
 public class StoreLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "store_id", nullable = false)
-    private int storeId;
+    @Column(name = "store_level_id", nullable = false)
+    private int storeLevelId;
     @Basic
     @Column(name = "name", nullable = false, length = 255)
     private String name;
@@ -26,16 +27,19 @@ public class StoreLevel {
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
-    @OneToOne
-    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
-    private Store storeByStoreId;
+    @OneToMany(mappedBy = "storeLevel",fetch = FetchType.EAGER)
+    private Collection<Store> stores;
 
-    public int getStoreId() {
-        return storeId;
+    public int getStoreLevelId() {
+        return storeLevelId;
     }
 
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
+    public void setStoreLevelId(int storeLevelId) {
+        this.storeLevelId = storeLevelId;
+    }
+
+    public Collection<Store> getStores() {
+        return stores;
     }
 
     public String getName() {
@@ -78,24 +82,8 @@ public class StoreLevel {
         this.updateDate = updateDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StoreLevel that = (StoreLevel) o;
-        return storeId == that.storeId && minPoint == that.minPoint && Objects.equals(name, that.name) && Objects.equals(isDeleted, that.isDeleted) && Objects.equals(createDate, that.createDate) && Objects.equals(updateDate, that.updateDate);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(storeId, name, minPoint, isDeleted, createDate, updateDate);
-    }
-
-    public Store getStoreByStoreId() {
-        return storeByStoreId;
-    }
-
-    public void setStoreByStoreId(Store storeByStoreId) {
-        this.storeByStoreId = storeByStoreId;
+    public void setStores(Collection<Store> stores) {
+        this.stores = stores;
     }
 }

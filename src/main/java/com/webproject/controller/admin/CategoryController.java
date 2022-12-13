@@ -13,7 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +65,14 @@ public class CategoryController extends HttpServlet {
             Category Category = new Category();
             BeanUtils.populate(Category, req.getParameterMap());
 
-            Category.setImage(UploadFile.uploadFile(req, "image"));
+            Part part = req.getPart("image");
+            String realPath = req.getServletContext().getRealPath("/upload");
+            String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            if (!Files.exists(Paths.get(realPath))) {
+                Files.createDirectory(Paths.get(realPath));
+            }
+            part.write(realPath + "/" + filename);
+            Category.setImage(filename);
 
             com.insertCategory(Category);
             req.setAttribute("message", "Đã thêm thành công");

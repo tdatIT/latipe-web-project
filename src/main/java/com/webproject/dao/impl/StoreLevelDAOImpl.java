@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +70,6 @@ public class StoreLevelDAOImpl implements IStoreLevelDAO {
         Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            storeLevel.setCreateDate(new Date(new java.util.Date().getTime()));
             session.save(storeLevel);
             tx.commit();
             return  true;
@@ -120,6 +120,7 @@ public class StoreLevelDAOImpl implements IStoreLevelDAO {
     }
 
     @Override
+    @Transactional
     public HashMap<Integer, Object> paginate(String search, int page, int option) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         List<StoreLevel> data = null;

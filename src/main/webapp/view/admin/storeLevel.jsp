@@ -281,14 +281,14 @@
                                     <c:forEach var="item" items="${storeLevels}">
                                         <tr class="odd">
                                             <td class="sorting_1"><a
-                                                    href="app-invoice-preview.html">${item.storeId}</a></td>
+                                                    href="app-invoice-preview.html">${item.store}</a></td>
                                             <td class="sorting_1">
                                                 <span class="fw-semibold"
-                                                      id="name-${item.storeId}">${item.name}</span>
+                                                      id="name-${item.storeLevelId}">${item.name}</span>
                                             </td>
                                             <td>
                                                 <span class="fw-semibold"
-                                                      id="cost-${item.storeId}">${item.minPoint}</span>
+                                                      id="cost-${item.storeLevelId}">${item.minPoint}</span>
                                             </td>
                                             <td style="text-align: center">
                                                 <div class="d-inline-block">
@@ -309,7 +309,7 @@
                                                         >
                                                         <div class="dropdown-divider"></div>
                                                         <a
-                                                                href="storeLevel/delete?storeId=${item.storeId}"
+                                                                href="storeLevel/delete?storeLevelId=${item.storeLevelId}"
                                                                 class="dropdown-item text-danger delete-record btn-delete"
                                                         >Delete</a
                                                         >

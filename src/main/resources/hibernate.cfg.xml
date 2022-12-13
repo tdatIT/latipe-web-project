@@ -24,6 +24,7 @@
             webproject2022
         </property>
         <property name="show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
 
 
         <!--List of XML mapping files &ndash-->
