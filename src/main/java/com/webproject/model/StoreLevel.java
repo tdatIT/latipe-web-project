@@ -27,7 +27,7 @@ public class StoreLevel {
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
-    @OneToMany(mappedBy = "storeLevel")
+    @OneToMany(mappedBy = "storeLevel",fetch = FetchType.EAGER)
     private Collection<Store> stores;
 
     public int getStoreLevelId() {

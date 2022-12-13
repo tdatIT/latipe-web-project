@@ -59,7 +59,7 @@ public class Store {
     @JoinColumn(name = "ownId", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByOwnId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_level_id")
     private StoreLevel storeLevel;
     @ManyToOne(fetch = FetchType.EAGER)
