@@ -2,6 +2,7 @@ package com.webproject.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -26,9 +27,8 @@ public class StoreLevel {
     @Basic
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
-    @OneToOne
-    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
-    private Store storeByStoreId;
+    @OneToMany(mappedBy = "storeLevel")
+    private Collection<Store> stores;
 
     public int getStoreId() {
         return storeId;
@@ -91,11 +91,7 @@ public class StoreLevel {
         return Objects.hash(storeId, name, minPoint, isDeleted, createDate, updateDate);
     }
 
-    public Store getStoreByStoreId() {
-        return storeByStoreId;
-    }
-
-    public void setStoreByStoreId(Store storeByStoreId) {
-        this.storeByStoreId = storeByStoreId;
+    public void setStores(Collection<Store> stores) {
+        this.stores = stores;
     }
 }
