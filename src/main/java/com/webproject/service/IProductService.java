@@ -30,4 +30,12 @@ public interface IProductService {
     public HashMap<Integer, Object> paginate(String search, int page, int option);
 
     public boolean setStatus(int id, boolean status);
+
+    List<Product> find6FlashSale();
+
+    List<Product> newProductList();
+
+    List<Product> findHotProduct();
+
+    List<Product> findProductForYou(int userId);
 }

@@ -3,11 +3,8 @@ package com.webproject.service.impl;
 import com.webproject.dao.IProductDAO;
 import com.webproject.dao.impl.ProductDAOImpl;
 import com.webproject.model.Product;
-import com.webproject.model.Store;
 import com.webproject.service.IProductService;
 
-import javax.servlet.http.HttpServlet;
-import java.time.LocalDate;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 public class ProductServiceImpl implements IProductService {
 
     private IProductDAO productDAO = new ProductDAOImpl();
+
     @Override
     public List<Product> findAll() {
         return productDAO.findAll();
@@ -42,7 +40,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product findByName(String name) {
-        return  productDAO.findByName(name);
+        return productDAO.findByName(name);
     }
 
     @Override
@@ -64,12 +62,34 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> getStatistic(String option, LocalDate date) {
         return productDAO.getStatistic(option, date);
     }
+
     @Override
     public HashMap<Integer, Object> paginate(String search, int page, int option) {
         return productDAO.paginate(search, option, page);
     }
+
     @Override
     public boolean setStatus(int id, boolean status) {
         return productDAO.setStatus(id, status);
+    }
+
+    @Override
+    public List<Product> find6FlashSale() {
+        return productDAO.find6FlashSale();
+    }
+
+    @Override
+    public List<Product> newProductList() {
+        return productDAO.newProductList();
+    }
+
+    @Override
+    public List<Product> findHotProduct() {
+        return productDAO.findHotProduct();
+    }
+
+    @Override
+    public List<Product> findProductForYou(int userId) {
+        return productDAO.findProductForYou(userId);
     }
 }
