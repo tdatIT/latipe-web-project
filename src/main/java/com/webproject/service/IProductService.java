@@ -31,11 +31,10 @@ public interface IProductService {
 
     public boolean setStatus(int id, boolean status);
 
-    List<Product> find6FlashSale();
+    public List<Product> newProductList();
+    public List<Product> find6FlashSale();
+    public List<Product> findHotProduct();
+    public List<Product> findProductForYou();
 
-    List<Product> newProductList();
-
-    List<Product> findHotProduct();
-
-    List<Product> findProductForYou(int userId);
+    public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status);
 }

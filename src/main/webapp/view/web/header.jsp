@@ -7,11 +7,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
 <!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
@@ -43,12 +38,12 @@
                         </c:if>
                         <c:if test="${sessionScope.user_id ne null}">
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-user" style="margin-right:5px ;"></i>Xin
+                                <a href="${pageContext.request.contextPath}/user"><i class="fa fa-user" style="margin-right:5px ;"></i>Xin
                                     chào ${sessionScope.lastname}</a>
 
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="logout"><i class="fa fa-sign-in"></i>Đăng xuất</a>
+                                <a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-in"></i>Đăng xuất</a>
                             </div>
                         </c:if>
                     </div>

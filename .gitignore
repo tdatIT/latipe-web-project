@@ -1,10 +1,10 @@
 #File config idea
 # Generated files
-.idea/*
+.idea/**
 #Target folder
-target/*
+target/**
 # Sensitive or high-churn files
-out/*
+out/**
 ### Java ###
 # Compiled class file
 *.class

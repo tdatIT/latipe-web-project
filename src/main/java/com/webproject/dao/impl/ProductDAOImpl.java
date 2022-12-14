@@ -4,9 +4,11 @@ import com.webproject.dao.IProductDAO;
 import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.Product;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import java.time.LocalDate;
@@ -87,6 +89,8 @@ public class ProductDAOImpl implements IProductDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             product = session.get(Product.class, id);
+            Hibernate.initialize(product.getReviewsByProductId());
+            Hibernate.initialize(product.getProductImgsByProductId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -268,7 +272,6 @@ public class ProductDAOImpl implements IProductDAO {
         return results;
     }
 
-    @Override
     public List<Product> find6FlashSale() {
         Session session = HibernateUtils.getSessionFactory().openSession();
         String HQL = "from Product p order by p.price-p.promotionalPrice desc";
@@ -329,32 +332,16 @@ public class ProductDAOImpl implements IProductDAO {
     }
 
     @Override
-    public List<Product> findProductForYou(int userId) {
-        String HQL = (userId == 0) ?
-                "select i.productByProductId " +
-                        "from OrderItems i " +
-                        "group by i.productByProductId " +
-                        "order by count(i.productByProductId) desc"
-                :
-                "select item.productByProductId from OrderItems item " +
-                        " where (item.productByProductId.isActive = true) and (item.orderByOrderId.userId = :id) " +
-                        " order by item.orderByOrderId.createDate desc ";
+    public List<Product> findProductForYou() {
         Session session = HibernateUtils.getSessionFactory().openSession();
-
+        String HQL = "from Product p inner join Orders o ";
         List<Product> products = new ArrayList<>();
-        try {
 
-            products = (userId != 0) ?
-                    session.createQuery(HQL)
-                            .setFirstResult(0)
-                            .setMaxResults(8)
-                            .setParameter("id", userId)
-                            .list()
-                    :
-                    session.createQuery(HQL)
-                            .setFirstResult(0)
-                            .setMaxResults(8)
-                            .list();
+        try {
+            products = session.createQuery(HQL)
+                    .setFirstResult(0)
+                    .setMaxResults(6)
+                    .list();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -362,5 +349,74 @@ public class ProductDAOImpl implements IProductDAO {
             session.close();
         }
         return products;
+    }
+
+    public HashMap<Integer, Object> paginateWeb(String search, int page, int cate, int minPrice, int maxPrice, int status) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<Product> data = null;
+        int count = 0;
+        try {
+            //get paginate
+            Criteria criteria = session.createCriteria(Product.class);
+            criteria.setMaxResults(12 * page + 12);
+            criteria.setFirstResult(12 * page);
+            // filter
+            criteria.add(Restrictions.eq("isActive", true));
+            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
+            if (cate != -1) {
+                criteria.add(Restrictions.eq("categoryId", cate));
+            }
+            if (minPrice != -1) {
+                criteria.add(Restrictions.ge("price", Double.valueOf(minPrice)));
+                criteria.add(Restrictions.lt("price", Double.valueOf(maxPrice)));
+            }
+            if (status != -1) {
+                switch (status) {
+                    case 1: {
+                        criteria.addOrder(Order.asc("price"));
+                        break;
+                    }
+                    case 2: {
+                        criteria.addOrder(Order.desc("price"));
+                        break;
+                    }
+                }
+            }
+            data = criteria.list();
+
+            //---------------count---------------
+            // filter
+            criteria.add(Restrictions.eq("isActive", true));
+            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
+            if (cate != -1) {
+                criteria.add(Restrictions.eq("categoryId", cate));
+            }
+            if (minPrice != -1) {
+                criteria.add(Restrictions.ge("price", Double.valueOf(minPrice)));
+                criteria.add(Restrictions.lt("price", Double.valueOf(maxPrice)));
+            }
+            if (status != -1) {
+                switch (status) {
+                    case 1: {
+                        criteria.addOrder(Order.asc("price"));
+                        break;
+                    }
+                    case 2: {
+                        criteria.addOrder(Order.desc("price"));
+                        break;
+                    }
+                }
+            }
+            count = criteria.list().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        HashMap<Integer, Object> results = new HashMap<Integer, Object>();
+        results.put(count, data);
+        return results;
+
+
     }
 }

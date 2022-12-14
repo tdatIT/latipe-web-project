@@ -6,6 +6,8 @@ const editAddress = document.getElementById('click-address')
 const showAdd = document.getElementById('showAdd');
 const editUser = document.getElementById('btn-edituser');
 
+const toggleAddress = document.getElementById('addNewAddressForm')
+
 if (display_address) {
     display_address.addEventListener('click', e => {
         address.style.display = 'block';
@@ -34,6 +36,7 @@ document.querySelector('.pic-edit').addEventListener('change', (e) => {
         document
             .getElementById('edit-pic-review')
             .setAttribute('src', window.URL.createObjectURL(e.target.files[0]));
+        toggleAddress.action = `userAddress/create`
     }
 });
 
@@ -49,6 +52,7 @@ if (editAddress) {
             document.getElementById('modalAddressCountry').value = document.getElementById(`address-country-${id}`).textContent
             document.getElementById('modalAddressCity').value = document.getElementById(`address-city-${id}`).textContent
             document.getElementById('modalAddressZipCode').value = document.getElementById(`address-zipcode-${id}`).textContent
+            toggleAddress.action = `userAddress/edit?addressId=${id}`
         }
     })
 }

@@ -81,7 +81,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "store_emp_id", referencedColumnName = "store_id", insertable=false, updatable=false)
     private Store storeByStoreEmpId;
-    @OneToMany(mappedBy = "userByUserId")
+    @OneToMany(mappedBy = "userByUserId", fetch = FetchType.LAZY)
     private Collection<UserAddress> userAddressesByUserId;
     @OneToMany(mappedBy = "userByUserId")
     private Collection<UserFollowProduct> userFollowProductsByUserId;
@@ -104,7 +104,7 @@ public class User {
         this.userLevelId = userLevelId;
     }
 
-    public String getFirstname() {
+        public String getFirstname() {
         return firstname;
     }
 

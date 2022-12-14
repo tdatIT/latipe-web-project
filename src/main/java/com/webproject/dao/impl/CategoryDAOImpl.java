@@ -89,11 +89,6 @@ public class CategoryDAOImpl implements ICategoryDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         try {
-//            Query query =session.createQuery("update Category set name = :name, image = :image where categoryId = :id");
-//            query.setParameter("name", category.getName());
-//            query.setParameter("image", category.getImage());
-//            query.setParameter("id", category.getCategoryId());
-//           int count = query.executeUpdate();
             session.update(category);
             tx.commit();
             status = true;
