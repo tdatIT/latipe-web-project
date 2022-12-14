@@ -1,11 +1,7 @@
 package com.webproject.runtest;
 
-import com.webproject.hibernate.HibernateUtils;
-import com.webproject.model.Role;
-import com.webproject.model.Store;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import com.webproject.dao.impl.ProductDAOImpl;
+import com.webproject.model.Product;
 
 import java.util.List;
 
@@ -23,7 +19,9 @@ public class MainApp {
 //        tx.commit();
 //        System.out.println(role.getName());
 //        session.close();
-        System.out.println("Present Project Directory : "+ System.getProperty("user.dir")+"\\src\\main\\webapp\\view\\admin");
-
+        ProductDAOImpl dao = new ProductDAOImpl();
+        List<Product> productList = dao.findProductForYou(0);
+        //System.out.println("Present Project Directory : " + System.getProperty("user.dir") + "\\src\\main\\webapp\\view\\admin");
+        System.out.println(productList.size());
     }
 }
