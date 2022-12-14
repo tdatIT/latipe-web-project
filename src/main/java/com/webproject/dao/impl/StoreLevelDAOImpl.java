@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
@@ -127,6 +128,7 @@ public class StoreLevelDAOImpl implements IStoreLevelDAO {
         int count = 0;
         try {
             //get paginate
+
             Criteria criteria = session.createCriteria(StoreLevel.class);
             criteria.setMaxResults(10 * page + 10);
             criteria.setFirstResult(10 * page);

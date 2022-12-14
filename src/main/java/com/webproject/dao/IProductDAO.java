@@ -39,4 +39,11 @@ public interface IProductDAO {
     public List<Product> findProductForYou();
     public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status);
 
+    List<Product> find6FlashSale();
+
+    List<Product> newProductList();
+
+    List<Product> findHotProduct();
+
+    List<Product> findProductForYou(int userId);
 }
