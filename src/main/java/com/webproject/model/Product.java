@@ -51,9 +51,9 @@ public class Product {
     @Basic
     @Column(name = "category_id", nullable = true)
     private Integer categoryId;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", fetch = FetchType.LAZY)
     private Collection<CartItems> cartItemsByProductId;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", fetch = FetchType.LAZY)
     private Collection<OrderItems> orderItemsByProductId;
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id", insertable = false, updatable = false)
@@ -64,7 +64,7 @@ public class Product {
     private Store storeByStoreId;
     @OneToMany(mappedBy = "productByProductId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<ProductImg> productImgsByProductId;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", fetch = FetchType.LAZY)
     private Collection<Review> reviewsByProductId;
     @OneToMany(mappedBy = "productByProductId")
     private Collection<UserFollowProduct> userFollowProductsByProductId;

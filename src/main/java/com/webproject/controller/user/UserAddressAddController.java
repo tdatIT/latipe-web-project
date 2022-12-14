@@ -1,4 +1,4 @@
-package com.webproject.controller.user;
+/*package com.webproject.controller.user;
 
 import com.webproject.controller.uploads.UploadFile;
 import com.webproject.model.Store;
@@ -77,3 +77,5 @@ public class UserAddressAddController extends HttpServlet {
 
     }
 }
+*/
+

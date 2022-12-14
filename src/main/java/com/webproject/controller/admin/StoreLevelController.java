@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,13 @@ public class StoreLevelController extends HttpServlet {
         }
         findAll(req, resp);
 //        req.setAttribute("tag", "cate");
-        req.getRequestDispatcher("/view/admin/storeLevel.jsp").forward(req, resp);
+        try{
+            req.getRequestDispatcher("/view/admin/storeLevel.jsp").forward(req, resp);
+
+        }
+        catch (Exception e){
+
+        }
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

@@ -33,5 +33,10 @@ public interface IProductDAO {
     public HashMap<Integer, Object > paginate(String search, int page,int option);
 
     public boolean setStatus(int id, boolean status);
+    public List<Product> newProductList();
+    public List<Product> find6FlashSale();
+    public List<Product> findHotProduct();
+    public List<Product> findProductForYou();
+    public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status);
 
 }

@@ -96,7 +96,7 @@ public class CategoryController extends HttpServlet {
             List<Category> categorys = (List<Category>) entry.getValue();
 
             int endPage = size / 10;
-            if (size % 3 != 10 && size > 10) {
+            if (size % 10 != 0 && size > 10) {
                 endPage++;
             }
             endPage = endPage > 0 ? endPage - 1 : endPage;

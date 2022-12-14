@@ -9,7 +9,7 @@ if (btn) {
             console.log(document.getElementById(`name-${id}`))
             document.getElementById('name-storeLevel').value = document.getElementById(`name-${id}`).textContent;
             document.getElementById('point-storeLevel').value = document.getElementById(`cost-${id}`).textContent;
-            document.getElementById("addNewStoreLevelForm").setAttribute('action', `storeLevel/edit?storeLevelId=${id}`)
+            document.getElementById("editNewStoreLevelForm").setAttribute('action', `storeLevel/edit?storeLevelId=${id}`)
         } else if (e.target.classList.contains('btn-delete')) {
             const id =
                 e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[0]

@@ -7,11 +7,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
 <!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
@@ -34,7 +29,7 @@
                         </div>
                         <c:if test="${sessionScope.user_id eq null}">
                             <div class="header__top__right__social">
-                                <a href="login"><i class="fa fa-sign-in" style="margin-right:5px ;"></i>Đăng Nhập</a>
+                                <a href="/login"><i class="fa fa-sign-in" style="margin-right:5px ;"></i>Đăng Nhập</a>
 
                             </div>
                             <div class="header__top__right__auth">
@@ -43,12 +38,13 @@
                         </c:if>
                         <c:if test="${sessionScope.user_id ne null}">
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-user" style="margin-right:5px ;"></i>Xin
+                                <a href="${pageContext.request.contextPath}/user"><i class="fa fa-user"
+                                                                                     style="margin-right:5px ;"></i>Xin
                                     chào ${sessionScope.lastname}</a>
-
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="logout"><i class="fa fa-sign-in"></i>Đăng xuất</a>
+                                <a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-in"></i>Đăng
+                                    xuất</a>
                             </div>
                         </c:if>
                     </div>
@@ -65,16 +61,11 @@
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
-                    <ul>
-                        <li>
-                            <div class="hero__search__form">
-                                <form action="#">
-                                    <input type="text" placeholder="Tìm kiếm sản phẩm ...">
-                                    <button type="submit" class="site-btn">SEARCH</button>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
+                    <div style="width: 100%">
+                        <input style="height: 45px; width: 350px;" type="text" id="seach-text"
+                               placeholder="Tìm kiếm sản phẩm ...">
+                        <button class="site-btn" id="btn-search">SEARCH</button>
+                    </div>
                 </nav>
             </div>
             <div class="col-lg-3">

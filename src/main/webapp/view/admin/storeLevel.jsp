@@ -281,7 +281,7 @@
                                     <c:forEach var="item" items="${storeLevels}">
                                         <tr class="odd">
                                             <td class="sorting_1"><a
-                                                    href="app-invoice-preview.html">${item.store}</a></td>
+                                                    href="app-invoice-preview.html">${item.storeLevelId}</a></td>
                                             <td class="sorting_1">
                                                 <span class="fw-semibold"
                                                       id="name-${item.storeLevelId}">${item.name}</span>
@@ -432,7 +432,7 @@
                             <div class="offcanvas-body flex-grow-0 mx-0">
                                 <form
                                         class="add-new-store pt-0"
-                                        id="editNewStoreLevelLevelForm"
+                                        id="editNewStoreLevelForm"
                                         method="post"
                                         role="form"
                                         action="storeLevel/edit"

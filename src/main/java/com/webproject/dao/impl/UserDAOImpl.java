@@ -4,6 +4,7 @@ import com.webproject.dao.IUsersDAO;
 import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.User;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -25,6 +26,8 @@ public class UserDAOImpl implements IUsersDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             user = session.get(User.class, id);
+            Hibernate.initialize(user.getUserAddressesByUserId());
+            Hibernate.initialize(user.getCartsByUserId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

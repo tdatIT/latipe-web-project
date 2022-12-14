@@ -3,20 +3,18 @@ package com.webproject.dao.impl;
 import com.webproject.dao.IProductDAO;
 import com.webproject.hibernate.HibernateUtils;
 import com.webproject.model.Product;
-import com.webproject.model.Product;
-import com.webproject.model.Product;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.Query;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +89,8 @@ public class ProductDAOImpl implements IProductDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             product = session.get(Product.class, id);
+            Hibernate.initialize(product.getReviewsByProductId());
+            Hibernate.initialize(product.getProductImgsByProductId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -182,7 +182,7 @@ public class ProductDAOImpl implements IProductDAO {
     public List<Product> getStatistic(String option, LocalDate date) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Criteria cr = session.createCriteria(Product.class);
-        DateTimeFormatter df =DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");        // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");        // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
         switch (option) {
             case "0": {
                 Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -192,7 +192,7 @@ public class ProductDAOImpl implements IProductDAO {
             }
             case "1": {
                 Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
-                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" +( date.getMonth().getValue() + 1 )+ "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
                 break;
             }
@@ -270,5 +270,153 @@ public class ProductDAOImpl implements IProductDAO {
         HashMap<Integer, Object> results = new HashMap<Integer, Object>();
         results.put(count, data);
         return results;
+    }
+
+    public List<Product> find6FlashSale() {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        String HQL = "from Product p order by p.price-p.promotionalPrice desc";
+        List<Product> products = new ArrayList<>();
+
+        try {
+            products = session.createQuery(HQL)
+                    .setFirstResult(0)
+                    .setMaxResults(6)
+                    .list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> newProductList() {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        String HQL = "from Product p order by p.createDate desc";
+        List<Product> products = new ArrayList<>();
+
+        try {
+            products = session.createQuery(HQL)
+                    .setFirstResult(0)
+                    .setMaxResults(6)
+                    .list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> findHotProduct() {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        String HQL = "from Product p order by p.sold desc";
+        List<Product> products = new ArrayList<>();
+
+        try {
+            products = session.createQuery(HQL)
+                    .setFirstResult(0)
+                    .setMaxResults(6)
+                    .list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> findProductForYou() {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        String HQL = "from Product p inner join Orders o ";
+        List<Product> products = new ArrayList<>();
+
+        try {
+            products = session.createQuery(HQL)
+                    .setFirstResult(0)
+                    .setMaxResults(6)
+                    .list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+
+    public HashMap<Integer, Object> paginateWeb(String search, int page, int cate, int minPrice, int maxPrice, int status) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        List<Product> data = null;
+        int count = 0;
+        try {
+            //get paginate
+            Criteria criteria = session.createCriteria(Product.class);
+            criteria.setMaxResults(12 * page + 12);
+            criteria.setFirstResult(12 * page);
+            // filter
+            criteria.add(Restrictions.eq("isActive", true));
+            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
+            if (cate != -1) {
+                criteria.add(Restrictions.eq("categoryId", cate));
+            }
+            if (minPrice != -1) {
+                criteria.add(Restrictions.ge("price", Double.valueOf(minPrice)));
+                criteria.add(Restrictions.lt("price", Double.valueOf(maxPrice)));
+            }
+            if (status != -1) {
+                switch (status) {
+                    case 1: {
+                        criteria.addOrder(Order.asc("price"));
+                        break;
+                    }
+                    case 2: {
+                        criteria.addOrder(Order.desc("price"));
+                        break;
+                    }
+                }
+            }
+            data = criteria.list();
+
+            //---------------count---------------
+            // filter
+            criteria.add(Restrictions.eq("isActive", true));
+            criteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
+            if (cate != -1) {
+                criteria.add(Restrictions.eq("categoryId", cate));
+            }
+            if (minPrice != -1) {
+                criteria.add(Restrictions.ge("price", Double.valueOf(minPrice)));
+                criteria.add(Restrictions.lt("price", Double.valueOf(maxPrice)));
+            }
+            if (status != -1) {
+                switch (status) {
+                    case 1: {
+                        criteria.addOrder(Order.asc("price"));
+                        break;
+                    }
+                    case 2: {
+                        criteria.addOrder(Order.desc("price"));
+                        break;
+                    }
+                }
+            }
+            count = criteria.list().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        HashMap<Integer, Object> results = new HashMap<Integer, Object>();
+        results.put(count, data);
+        return results;
+
+
     }
 }

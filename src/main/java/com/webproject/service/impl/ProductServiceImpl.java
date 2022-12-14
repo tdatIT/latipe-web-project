@@ -72,4 +72,20 @@ public class ProductServiceImpl implements IProductService {
     public boolean setStatus(int id, boolean status) {
         return productDAO.setStatus(id, status);
     }
+
+    public List<Product> newProductList() {
+        return productDAO.newProductList();
+    }
+    public List<Product> find6FlashSale() {
+        return productDAO.find6FlashSale();
+    }
+    public List<Product> findHotProduct() {
+        return productDAO.findHotProduct();
+    }
+    public List<Product> findProductForYou() {
+        return productDAO.findProductForYou();
+    }
+    public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status){
+        return productDAO.paginateWeb( search,page,  cate,  minPrice,  maxPrice,  status);
+    }
 }
