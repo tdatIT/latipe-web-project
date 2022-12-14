@@ -45,7 +45,7 @@ public class FollowStoreController extends HttpServlet {
             return;
         }
         resp.sendRedirect("/"); // i nưa tu sua lai cho nay
-//        req.getRequestDispatcher("/view/admin/product.jsp").forward(req, resp);
+        req.getRequestDispatcher("/view/user/StoreProfile.jsp").forward(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
