@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -202,10 +203,11 @@ public class UserDAOImpl implements IUsersDAO {
                 break;
             }
             case "1": {
+                YearMonth yearMonthObject = YearMonth.of(date.getYear(),  date.getMonth().getValue());
+                int daysInMonth = yearMonthObject.lengthOfMonth();
                 Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
-                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() ) + "-"+(daysInMonth))).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
-
                 break;
             }
             case "2": {

@@ -255,7 +255,7 @@
                                     <h2 class="card-title mb-0">Profit</h2>
                                 </div>
                                 <div class="d-none d-sm-flex align-items-center">
-                                    <h2 class="fw-bold me-3 mb-0" id="newProfit">${coutNewProfit} VND</h2>
+                                    <h2 class="fw-bold me-3 mb-0" id="newProfit">${ String.format("%.0f",coutNewProfit)} VND</h2>
                                 </div>
                             </div>
                             <div class="card-body">

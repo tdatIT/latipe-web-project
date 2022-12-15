@@ -246,7 +246,7 @@
                                                     <c:forEach var="item" items="${userLevels}">
                                                         <tr class="odd">
                                                             <td class="sorting_1">
-                                                                <a>${item.userLevelId}</a>
+                                                                 <span class="fw-semibold" id="id-${item.userLevelId}">${item.userLevelId}</span>
                                                             </td>
                                                             <td class="sorting_1">
                                                                 <span class="fw-semibold"

@@ -353,7 +353,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="name-category">ID</label>
                                         <input type="text" class="form-control" id="id-category"
-                                               placeholder="John Doe" name="categoryId" <%-- disabled--%>
+                                               placeholder="John Doe" name="categoryId" readonly="readonly" <%-- disabled--%>
                                         />
                                     </div>
                                     <div class="mb-3">

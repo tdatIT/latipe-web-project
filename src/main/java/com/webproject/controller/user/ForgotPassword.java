@@ -39,65 +39,27 @@ public class ForgotPassword extends HttpServlet {
         if (pass == null) {
             req.getRequestDispatcher(Router.ERROR_404_PAGE).forward(req, response);
         }
-        // Recipient's email ID needs to be mentioned.
-
         final String username = "anhn77158@gmail.com";
         final String password = "qqmmnmhwzcutosmw";
-
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true"); //TLS
-
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
                 });
-
         String to = email;
-
-        // Sender's email ID needs to be mentioned
         String from = "anhn77158@gmail.com";
-
-//        // Assuming you are sending email from localhost
-//        String host = "localhost";
-//
-//        // Get system properties
-//        Properties properties = System.getProperties();
-//
-//        // Setup mail server
-//        properties.setProperty("mail.smtp.host", host);
-//        properties.setProperty("mail.smtp.port", "8080");
-//        properties.setProperty("mail.smtp.socketFactory.fallback", "false");
-//        properties.put("mail.smtp.auth", "true"); //enable authentication
-//        properties.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
-        // Get the default Session object.
-//        Authenticator auth = new Authenticator() {
-//            public PasswordAuthentication getPasswordAuthentication() {
-//                return new PasswordAuthentication("anhn77158@gmail.com", "bevgxcvgaxlgmnja");
-//            }
-//        };
-//        Session session = Session.getDefaultInstance(properties, auth);
-//        // Set response content type
-//        response.setContentType("text/html");
-//        PrintWriter out = response.getWriter();
-
         try {
-
-            // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-            // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            // Set Subject: header field
             message.setSubject("Reset Password!");
-            // Send the actual HTML message, as big as you like
             message.setContent("<h1>Your password: " + pass + "</h1>", "text/html");
-            // Send message
             Transport.send(message);
             response.sendRedirect(req.getContextPath() + "/login");
         } catch (AddressException e) {

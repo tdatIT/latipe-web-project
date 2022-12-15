@@ -3,10 +3,11 @@ const search = document.getElementById('btn-search');
 if (btn) {
     btn.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-edit')) {
-            const id =
-                e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[0]
-                    .textContent;
-            console.log(document.getElementById(`name-${id}`))
+            console.log(e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1])
+            console.log(e.target.parentElement.parentElement.parentElement.parentElement.childNodes[0].childNodes)
+            console.log(e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1])
+            const id = e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].textContent;
+
             document.getElementById('name-delivery').value = document.getElementById(`name-${id}`).textContent;
             document.getElementById('price-delivery').value = document.getElementById(`price-${id}`).textContent;
             document.getElementById('des-delivery').value = document.getElementById(`des-${id}`).textContent;

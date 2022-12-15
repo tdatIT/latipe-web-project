@@ -3,9 +3,8 @@ const search = document.getElementById('btn-search');
 if (btn) {
     btn.addEventListener('click', (e) => {
         if (e.target.classList.contains('btn-edit')) {
-            const id =
-                e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[0]
-                    .textContent;
+            const id =e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[0].textContent;
+            console.log(id)
             console.log(document.getElementById(`name-${id}`))
             document.getElementById('name-commission').value = document.getElementById(`name-${id}`).textContent;
             document.getElementById('cost-commission').value = document.getElementById(`cost-${id}`).textContent;

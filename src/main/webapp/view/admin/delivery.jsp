@@ -297,9 +297,8 @@
                                             items="${deliverys}">
                                         <tr
                                                 class="odd">
-                                            <td
-                                                    class="sorting_1">
-                                                <a>${item.deliveryId}</a>
+                                            <td class="sorting_1">
+                                                <span>${item.deliveryId}</span>
                                             </td>
                                             <td
                                                     class="sorting_1">
@@ -325,7 +324,7 @@
                                                     </button>
                                                     <div
                                                             class="dropdown-menu dropdown-menu-end">
-                                                        <a href="javascript:;"
+                                                        <a href="javascript:"
                                                            class="dropdown-item text-success delete-record btn-edit"
                                                            data-bs-toggle="offcanvas"
                                                            data-bs-target="#offcanvasEditDelivery">Edit</a>

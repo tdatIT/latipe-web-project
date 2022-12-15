@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import javax.persistence.Query;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -225,8 +226,10 @@ public class OrderDAOImpl implements IOrderDAO {
                 break;
             }
             case "1": {
+                YearMonth yearMonthObject = YearMonth.of(date.getYear(),  date.getMonth().getValue());
+                int daysInMonth = yearMonthObject.lengthOfMonth();
                 java.util.Date fromDate = java.util.Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
-                java.util.Date toDate = java.util.Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                java.util.Date toDate = java.util.Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue()) + "-" + daysInMonth)).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
                 break;
             }
