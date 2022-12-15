@@ -12,9 +12,9 @@ import com.webproject.service.impl.OrderServiceImpl;
 import com.webproject.service.impl.ProductServiceImpl;
 import com.webproject.service.impl.StoreServiceImpl;
 import com.webproject.service.impl.UserServiceImpl;
+import com.webproject.variable.SessionVar;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/admin"})
 public class DashboardController extends HttpServlet {
 
-        IUserService userService = new UserServiceImpl();
+    IUserService userService = new UserServiceImpl();
     IStoreService storeService = new StoreServiceImpl();
     IOrderService orderService = new OrderServiceImpl();
     IProductService prodService = new ProductServiceImpl();
@@ -37,8 +37,18 @@ public class DashboardController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
         HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        if((Integer) session.getAttribute(SessionVar.ROLE_ID) != 1) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user1 = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user1);
+        req.setCharacterEncoding("utf-8");
         try {
             String option = req.getParameter("option") != null ? req.getParameter("option") : "0";
             LocalDate date = req.getParameter("date") != null ? LocalDate.parse(req.getParameter("date")) : LocalDate.now();

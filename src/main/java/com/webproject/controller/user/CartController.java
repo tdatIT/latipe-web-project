@@ -18,16 +18,14 @@ import java.io.IOException;
 public class CartController extends HttpServlet {
     IUserService userService = new UserServiceImpl();
     ICartItemsService cartItemsService = new CartItemsServiceImpl();
-    IProductService productService = new ProductServiceImpl();
-    ICategoryService cateService = new CategoryServiceImpl();
     ICartService cartService = new CartServiceImpl();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-//        if (session.getAttribute(SessionVar.USER_ID) == null){
-//            resp.sendRedirect("login");
-//            return;
-//        }
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
         String url = req.getRequestURL().toString();
         if (url.contains("delete")) {
             delete(req, resp);
@@ -45,7 +43,6 @@ public class CartController extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
-
             session.setAttribute("user", user);
             Cart cart = cartService.findCartByUserId(user.getUserId());
             req.setAttribute("cart", cart);

@@ -10,7 +10,10 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.Query;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,9 +47,14 @@ public class UserDAOImpl implements IUsersDAO {
         List<User> users = new ArrayList<>();
         boolean status = false;
         try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            String passHash = DatatypeConverter
+                    .printHexBinary(digest).toUpperCase();
             users = session.createQuery(HQL)
                     .setParameter("email", email)
-                    .setParameter("password", password)
+                    .setParameter("password", passHash)
                     .list();
             if (users.size() > 0) {
                 status = true;
@@ -164,6 +172,7 @@ public class UserDAOImpl implements IUsersDAO {
     public boolean updateRole(int id, int role_id) {
         return false;
     }
+
     @Override
     public List<User> findByStore(int storeId) {
         String HQL = "from User u where u.storeEmpId=:storeId";
@@ -179,6 +188,7 @@ public class UserDAOImpl implements IUsersDAO {
         }
         return users;
     }
+
     @Override
     public List<User> getStatistic(String option, LocalDate date) {
         Session session = HibernateUtils.getSessionFactory().openSession();
@@ -193,10 +203,11 @@ public class UserDAOImpl implements IUsersDAO {
                 break;
             }
             case "1": {
+                YearMonth yearMonthObject = YearMonth.of(date.getYear(),  date.getMonth().getValue());
+                int daysInMonth = yearMonthObject.lengthOfMonth();
                 Date fromDate = Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
-                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                Date toDate = Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() ) + "-"+(daysInMonth))).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
-
                 break;
             }
             case "2": {
@@ -215,6 +226,7 @@ public class UserDAOImpl implements IUsersDAO {
         }
         return results;
     }
+
     @Override
     public boolean setStatus(int id, boolean status) {
         Transaction tx = null;
@@ -272,5 +284,35 @@ public class UserDAOImpl implements IUsersDAO {
         HashMap<Integer, Object> results = new HashMap<Integer, Object>();
         results.put(count, data);
         return results;
+    }
+
+    @Override
+    public String resetPassword(String email) {
+        Transaction tx = null;
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+        User user = getUserByEmail(email);
+        try {
+            if (user != null) {
+
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                String pass = String.format("%.0f", Math.random() * (999999999 - 299999999 + 1) + 299999999);
+                md.update(pass.getBytes());
+                byte[] digest = md.digest();
+                user.setHashedPassword(DatatypeConverter.printHexBinary(digest).toUpperCase());
+                session.update(user);
+                tx.commit();
+                return pass;
+            } else {
+                session.update(user);
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
     }
 }

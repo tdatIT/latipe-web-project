@@ -1,18 +1,12 @@
 document.querySelector('.dropdown-menu-filter').addEventListener('click', async (e) => {
     const filter = document.querySelector('.btn-filter')
-    console.log(filter.textContent )
-    console.log(e.target.textContent )
     if (filter.textContent !== e.target.textContent) {
         filter.textContent = e.target.textContent;
         const row = document.getElementById("main-data")
-        // row.innerHTML = `</div><div class="spinner-border spinner-border-lg text-primary style="align-content: center; align-items: center; left:50%;"  id="spinner"" role="status">
-        //                   <span class="visually-hidden">Loading...</span>
-        //                 </div>` + row.innerHTML
         const t = {Year: 0, Month: 1, Week: 2, Day: 3};
         let date = document.getElementById("flatpickr-date").value.toString() != "" ? "&date=" + document.getElementById("flatpickr-date").value : "";
-        const data = await fetch(`/project_web_programming_war_exploded/admin/getStatitis?option=${t[e.target.textContent]}${date}`);
+        const data = await fetch(`admin/getStatitis?option=${t[e.target.textContent]}${date}`);
         const res = await data.json()
-        console.log(res)
         // document.getElementById("spinner").remove();
 
 
@@ -20,6 +14,7 @@ document.querySelector('.dropdown-menu-filter').addEventListener('click', async 
         document.getElementById("newShop").textContent = res["coutNewShop"];
         document.getElementById("newUser").textContent = res["coutNewUser"];
 
+        console.log(res)
 
         /// Graph
         let dataX = []

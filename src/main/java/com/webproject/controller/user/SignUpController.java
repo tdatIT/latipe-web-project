@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.Date;
 
 @WebServlet(urlPatterns = {Router.SIGNUP})
@@ -44,7 +46,12 @@ public class SignUpController extends HttpServlet {
                 us.setLastname(req.getParameter("lastname"));
                 us.setFirstname(req.getParameter("firstname"));
                 us.setEmail(req.getParameter("email"));
-                us.setHashedPassword(req.getParameter("password"));
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(req.getParameter("password").getBytes());
+                byte[] digest = md.digest();
+                String passHash = DatatypeConverter
+                        .printHexBinary(digest).toUpperCase();
+                us.setHashedPassword(passHash);
                 us.setPhone(req.getParameter("phone"));
                 us.setIdCard(req.getParameter("id_card"));
                 //set default value into object

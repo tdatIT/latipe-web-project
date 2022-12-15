@@ -51,6 +51,10 @@ public class LoginController extends HttpServlet {
                     session.setAttribute(SessionVar.USER_ID, us.getUserId());
                     session.setAttribute(SessionVar.NAME_USER, us.getLastname());
                     session.setAttribute(SessionVar.ROLE_ID, us.getRoleId());
+                    if (us.getRoleId() == 1){
+                        resp.sendRedirect(req.getContextPath() + "/admin");
+                        return;
+                    }
                     resp.sendRedirect(req.getContextPath() + Router.HOME);
                 } else {
                     req.setAttribute("status", false);

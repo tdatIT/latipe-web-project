@@ -14,11 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.security.MessageDigest;
+
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 4,
         maxRequestSize = 1024 * 1024 * 50)
-@WebServlet(urlPatterns = {"/user", "/user/edit", "/user/resetpassword"})
+@WebServlet(urlPatterns = {"/user", "/user/edit", "/user/changePass"})
 public class UserController extends HttpServlet {
     IUserService userService = new UserServiceImpl();
 //    IUserAddressService userAddressService = new UserAddressServiceImpl();
@@ -26,6 +29,12 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("delete")) {
             doPost(req, resp);
@@ -43,13 +52,20 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+        HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("edit")) {
             update(req, resp);
         } else if (url.contains("delete")) {
             delete(req, resp);
+        } else if ((url.contains("changePass"))) {
+            changePass(req, resp);
         }
         resp.sendRedirect(req.getContextPath() + "/user");
 
@@ -61,7 +77,6 @@ public class UserController extends HttpServlet {
         HttpSession session = req.getSession();
         try {
 //
-
             String useId = req.getParameter("useId");
             userService.disableUser(Integer.parseInt(useId));
             req.setAttribute("message", "Đã xóa thành công");
@@ -71,7 +86,25 @@ public class UserController extends HttpServlet {
             e.printStackTrace();
         }
     }
+    protected void changePass(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        try {
+            HttpSession session = req.getSession();
+            String password = req.getParameter("password");
 
+            // lay ra thong tin user
+            User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            String passHash = DatatypeConverter
+                    .printHexBinary(digest).toUpperCase();
+            user.setHashedPassword(passHash);
+            userService.updateUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void findAll(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {

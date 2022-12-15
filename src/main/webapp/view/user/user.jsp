@@ -196,7 +196,7 @@
                             <div class="card mb-4" id="card-password" style="display: none">
                                 <h5 class="card-header">Change Password</h5>
                                 <div class="card-body">
-                                    <form id="formChangePassword" method="POST" onsubmit="return false">
+                                    <form id="formChangePassword" method="post" action="user/changePass">
                                         <div class="alert alert-warning" role="alert">
                                             <h6 class="alert-heading mb-1">Ensure that these requirements are met</h6>
                                             <span>Minimum 8 characters long, uppercase & symbol</span>
@@ -206,7 +206,7 @@
                                                 <label class="form-label" for="newPassword">New Password</label>
                                                 <div class="input-group input-group-merge">
                                                     <input class="form-control" type="password" id="newPassword"
-                                                           name="newPassword"
+                                                           name="password"
                                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
                                                     <span class="input-group-text cursor-pointer"><i
                                                             class="bx bx-hide"></i></span>

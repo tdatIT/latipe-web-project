@@ -13,12 +13,12 @@ if (btn) {
 
         if (e.target.classList.contains('btn-edit')) {
             const id =
-                e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].textContent;
+                e.target.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[0].textContent;
             document
                 .getElementById('id-category').value = id;
             document
                 .getElementById('edit-pic-review')
-                .setAttribute('src', document.getElementById(`image-${id}`).getAttribute('src'));
+                .setAttribute('src', document.getElementById(`image-${id}`).src);
             document.getElementById('name-category').value = document.getElementById(`name-${id}`).textContent;
         } else if (e.target.classList.contains('btn-delete')) {
 
