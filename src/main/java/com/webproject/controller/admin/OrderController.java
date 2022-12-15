@@ -2,14 +2,19 @@ package com.webproject.controller.admin;
 
 
 import com.webproject.model.Orders;
+import com.webproject.model.User;
 import com.webproject.service.IOrderService;
+import com.webproject.service.IUserService;
 import com.webproject.service.impl.OrderServiceImpl;
+import com.webproject.service.impl.UserServiceImpl;
+import com.webproject.variable.SessionVar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +30,20 @@ public class OrderController extends HttpServlet {
         super();
     }
 
+    IUserService userService = new UserServiceImpl();
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws ServletException, IOException { HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        if((Integer) session.getAttribute(SessionVar.ROLE_ID) != 1) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("edit")) {
             doPost(req, resp);

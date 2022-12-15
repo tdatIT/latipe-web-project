@@ -3,17 +3,18 @@ package com.webproject.controller.admin;
 
 import com.webproject.controller.uploads.UploadFile;
 import com.webproject.model.Category;
+import com.webproject.model.User;
 import com.webproject.service.ICategoryService;
+import com.webproject.service.IUserService;
 import com.webproject.service.impl.CategoryServiceImpl;
+import com.webproject.service.impl.UserServiceImpl;
+import com.webproject.variable.SessionVar;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,13 +29,25 @@ import java.util.Map;
         "/admin/category/edit", "/admin/category/delete"})
 public class CategoryController extends HttpServlet {
     ICategoryService com = new CategoryServiceImpl();
-
+    IUserService userService = new UserServiceImpl();
     public CategoryController() {
         super();
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        if((Integer) session.getAttribute(SessionVar.ROLE_ID) != 1) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
+
         String url = req.getRequestURL().toString();
         if (url.contains("delete")) {
             doPost(req, resp);
@@ -64,7 +77,6 @@ public class CategoryController extends HttpServlet {
             resp.setCharacterEncoding("UTF-8");
             Category Category = new Category();
             BeanUtils.populate(Category, req.getParameterMap());
-
             Part part = req.getPart("image");
             String realPath = req.getServletContext().getRealPath("/upload");
             String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();

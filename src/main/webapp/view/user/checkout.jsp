@@ -21,17 +21,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
             rel="stylesheet"/>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="./view/admin/assets/vendor/css/rtl/core.css"/>
+    <link rel="stylesheet" href="../view/admin/assets/vendor/css/rtl/theme-default.css"/>
+    <link rel="stylesheet" href="../view/admin/assets/css/demo.css"/>
     <!-- Icons -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/vendor/fonts/boxicons.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/vendor/fonts/fontawesome.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/vendor/fonts/flag-icons.css"/>
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/vendor/css/rtl/core.css"
-          class="template-customizer-core-css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/vendor/css/rtl/theme-default.css"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/assets/css/demo.css"/>
+
 
     <!-- Vendors CSS -->
     <link rel="stylesheet"
@@ -47,8 +47,8 @@
 
     <!-- Page CSS -->
 
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/view/admin/assets/vendor/css/pages/wizard-ex-checkout.css"/>
+<%--    <link rel="stylesheet"--%>
+<%--          href="${pageContext.request.contextPath}/view/admin/assets/vendor/css/pages/wizard-ex-checkout.css"/>--%>
     <!-- Helpers -->
     <script src="${pageContext.request.contextPath}/view/admin/assets/vendor/js/helpers.js"></script>
 

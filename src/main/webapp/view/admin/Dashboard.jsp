@@ -2,18 +2,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
-<html lang="en" lang="en"
-      class="light-style layout-navbar-fixed layout-menu-fixed"
-      dir="ltr"
-      data-theme="theme-default"
-      data-assets-path="./view/admin/assets/"
+<html lang="en" lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr"
+      data-theme="theme-default" data-assets-path="./view/admin/assets/"
       data-template="vertical-menu-template-no-customizer">
+
 <head>
     <meta charset="utf-8"/>
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 
     <title>Dashboard - Analytics | Frest - Bootstrap Admin Template</title>
 
@@ -27,8 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
+            rel="stylesheet"/>
 
     <!-- Icons -->
     <link rel="stylesheet" href="./view/admin/assets/vendor/fonts/boxicons.css"/>
@@ -45,11 +40,10 @@
     <link rel="stylesheet" href="./view/admin/assets/vendor/libs/typeahead-js/typeahead.css"/>
     <link rel="stylesheet" href="./view/admin/assets/vendor/libs/apex-charts/apex-charts.css"/>
     <link rel="stylesheet" href="./view/admin/assets/vendor/libs/flatpickr/flatpickr.css"/>
-    <link rel="stylesheet" href="./view/admin/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css"/>
-    <link
-            rel="stylesheet"
-            href="./view/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css"
-    />
+    <link rel="stylesheet"
+          href="./view/admin/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css"/>
+    <link rel="stylesheet"
+          href="./view/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css"/>
     <link rel="stylesheet" href="./view/admin/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css"/>
     <link rel="stylesheet" href="./view/admin/assets/vendor/libs/pickr/pickr-themes.css"/>
     <!-- Page CSS -->
@@ -65,6 +59,7 @@
             integrity="sha512-sa449wQ9TM6SvZV7TK7Zx/SjVR6bc7lR8tRz1Ar4/R6X2jOLaFln/9C+6Ak2OkAKZ/xBAKJ94dQMeYa0JT1RLg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
@@ -76,10 +71,8 @@
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
-            <nav
-                    class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
-                    id="layout-navbar"
-            >
+            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
+                 id="layout-navbar">
                 <div class="container-fluid">
                     <div class="layout-menu-toggle navbar-nav d-xl-none align-items-xl-center me-3 me-xl-0">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -91,7 +84,8 @@
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Style Switcher -->
                             <li class="nav-item me-2 me-xl-0">
-                                <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                                <a class="nav-link style-switcher-toggle hide-arrow"
+                                   href="javascript:void(0);">
                                     <i class="bx bx-sm"></i>
                                 </a>
                             </li>
@@ -99,13 +93,11 @@
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a
-                                        class="nav-link dropdown-toggle hide-arrow"
-                                        href="javascript:void(0);"
-                                        data-bs-toggle="dropdown"
-                                >
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                   data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="./view/admin/assets/img/avatars/1.png" alt class="rounded-circle"/>
+                                        <img src="${pageContext.request.contextPath}/upload/uer.png}" alt
+                                             class="rounded-circle"/>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -114,15 +106,13 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img
-                                                                src="${pageContext.request.contextPath}/upload/${user.avatar}"
-                                                                alt
-                                                                class="rounded-circle"
-                                                        />
+                                                        <img src="${pageContext.request.contextPath}/upload/${user.avatar}"
+                                                             alt class="rounded-circle"/>
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="lh-1 d-block fw-semibold">${user.firstname}</span>
+                                                                <span
+                                                                        class="lh-1 d-block fw-semibold">${user.firstname}</span>
                                                     <small>Admin</small>
                                                 </div>
                                             </div>
@@ -131,22 +121,14 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
+
                                     <li>
-                                        <a class="dropdown-item" href="/admin/profile">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="/admin/setting">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
+                                        <a class="dropdown-item"
+                                           href="${pageContext.request.contextPath}/logout">
                                             <i class="bx bx-power-off me-2"></i>
-                                            <span class="align-middle">Log Out</span>
+                                            <span class="align-middle"><a
+                                                    href="${pageContext.request.contextPath}/logout">Log
+                                                                Out</a></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -161,25 +143,20 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="breadcrumb-wrapper py-3 mb-4">
+                        DashBoard
+                    </h4>
                     <div class="col-12 col-sm-6 col-lg-3 mb-4">
                         <h4 class="text-light fw-semibold">Filter</h4>
                         <div class="col-12 col-md-6 mb-4">
                             <label for="flatpickr-date" class="form-label">Date Picker</label>
-                            <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="YYYY-MM-DD"
-                                    id="flatpickr-date"
-                            />
+                            <input type="text" class="form-control" placeholder="YYYY-MM-DD"
+                                   id="flatpickr-date"/>
                         </div>
                         <div class="demo-inline-spacing" id="main-data">
                             <div class="btn-group" id="hover-dropdown-demo">
-                                <button
-                                        type="button"
-                                        class="btn btn-primary dropdown-toggle btn-filter"
-                                        data-bs-toggle="dropdown"
-                                        data-trigger="hover"
-                                >
+                                <button type="button" class="btn btn-primary dropdown-toggle btn-filter"
+                                        data-bs-toggle="dropdown" data-trigger="hover">
                                     All
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-filter">
@@ -208,16 +185,14 @@
                                     <h5 class="card-title mb-0">Website Analytics</h5>
                                 </div>
                                 <div class="card-body pb-2">
-                                    <div class="d-flex flex-wrap justify-content-around align-items-center mb-4">
+                                    <div
+                                            class="d-flex flex-wrap justify-content-around align-items-center mb-4">
                                         <div class="user-analytics text-center me-2">
                                             <i class="bx bx-user me-1"></i>
                                             <span>Users</span>
                                             <div class="d-flex align-items-center mt-2">
-                                                <div
-                                                        class="chart-report"
-                                                        data-color="success"
-                                                        data-series="35"
-                                                ></div>
+                                                <div class="chart-report" data-color="success"
+                                                     data-series="35"></div>
                                                 <h3 class="mb-0">${coutUser}</h3>
                                             </div>
                                         </div>
@@ -225,11 +200,8 @@
                                             <i class="menu-icon tf-icon bx bx-store"></i>
                                             <span>Shops</span>
                                             <div class="d-flex align-items-center mt-2">
-                                                <div
-                                                        class="chart-report"
-                                                        data-color="warning"
-                                                        data-series="76"
-                                                ></div>
+                                                <div class="chart-report" data-color="warning"
+                                                     data-series="76"></div>
                                                 <h3 class="mb-0">${coutShop}</h3>
                                             </div>
                                         </div>
@@ -237,11 +209,8 @@
                                             <i class="menu-icon tf-icon bx bx-gift"></i>
                                             <span>Products</span>
                                             <div class="d-flex align-items-center mt-2">
-                                                <div
-                                                        class="chart-report"
-                                                        data-color="danger"
-                                                        data-series="65"
-                                                ></div>
+                                                <div class="chart-report" data-color="danger"
+                                                     data-series="65"></div>
                                                 <h3 class="mb-0">${coutProd}</h3>
                                             </div>
                                         </div>
@@ -250,9 +219,9 @@
                                 </div>
                             </div>
                         </div>
-<%--                    '    <div class="col-md-12 col-lg-6">--%>
+                        <%-- '    <div class="col-md-12 col-lg-6">--%>
 
-<%--                        </div>'--%>
+                        <%--                        </div>' --%>
                         <div class="col-md-12 mb-4">
                             <div class="row">
                                 <!-- new shop -->
@@ -298,9 +267,9 @@
                 <script type="module">
                     let dataX = []
                     let dataY = []
-                    <c:forEach items="${prods}" var="prod">
-                    dataX.push(${prod.key})
-                    dataY.push(${prod.value})
+                    <c:forEach items = "${prods}" var="prod" >
+                    dataX.push(${ prod.key })
+                    dataY.push(${ prod.value })
                     </c:forEach>
                     const analyticsBarChartEl = document.querySelector('#analyticsBarChart'),
                         analyticsBarChartConfig = {
@@ -374,9 +343,9 @@
 
                     dataX = []
                     dataY = []
-                    <c:forEach items="${users}" var="user">
-                    dataX.push(${user.key})
-                    dataY.push(${user.value})
+                    <c:forEach items = "${users}" var="user" >
+                    dataX.push(${ user.key })
+                    dataY.push(${ user.value })
                     </c:forEach>
                     const horizontalBarChartUserEl = document.querySelector('#horizontalBarChartUser'),
                         horizontalBarChartUserConfig = {
@@ -449,9 +418,9 @@
                     // new shop
                     dataX = []
                     dataY = []
-                    <c:forEach items="${stores}" var="order">
-                    dataX.push(${order.key})
-                    dataY.push(${order.value})
+                    <c:forEach items = "${stores}" var  ="order" >
+                    dataX.push(${ order.key })
+                    dataY.push(${ order.value })
                     </c:forEach>
                     const horizontalBarChartShopEl = document.querySelector('#horizontalBarChartShop'),
                         horizontalBarChartShopConfig = {
@@ -606,45 +575,27 @@
                 <!-- Footer -->
                 <footer class="content-footer footer bg-footer-theme">
                     <div
-                            class="container-fluid d-flex flex-column flex-md-row flex-wrap justify-content-between py-2"
-                    >
+                            class="container-fluid d-flex flex-column flex-md-row flex-wrap justify-content-between py-2">
                         <div class="mb-2 mb-md-0">
                             ©
                             <script>
                                 document.write(new Date().getFullYear());
                             </script>
                             , made with ❤️ by
-                            <a href="https://pixinvent.com" target="_blank" class="footer-link fw-semibold"
-                            >PIXINVENT</a
-                            >
+                            <a href="https://pixinvent.com" target="_blank"
+                               class="footer-link fw-semibold">PIXINVENT</a>
                         </div>
                         <div>
-                            <a
-                                    href="https://themeforest.net/licenses/standard"
-                                    class="footer-link me-4"
-                                    target="_blank"
-                            >License</a
-                            >
-                            <a
-                                    href="https://1.envato.market/pixinvent_portfolio"
-                                    target="_blank"
-                                    class="footer-link me-4"
-                            >More Themes</a
-                            >
+                            <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"
+                               target="_blank">License</a>
+                            <a href="https://1.envato.market/pixinvent_portfolio" target="_blank"
+                               class="footer-link me-4">More Themes</a>
 
-                            <a
-                                    href="https://pixinvent.com/demo/frest-clean-bootstrap-admin/dashboard-template/documentation-bs5/"
-                                    target="_blank"
-                                    class="footer-link me-4"
-                            >Documentation</a
-                            >
+                            <a href="https://pixinvent.com/demo/frest-clean-bootstrap-admin/dashboard-template/documentation-bs5/"
+                               target="_blank" class="footer-link me-4">Documentation</a>
 
-                            <a
-                                    href="https://pixinvent.ticksy.com/"
-                                    target="_blank"
-                                    class="footer-link d-none d-sm-inline-block"
-                            >Support</a
-                            >
+                            <a href="https://pixinvent.ticksy.com/" target="_blank"
+                               class="footer-link d-none d-sm-inline-block">Support</a>
                         </div>
                     </div>
                 </footer>
@@ -675,7 +626,8 @@
 <script src="./view/admin/assets/vendor/libs/moment/moment.js"></script>
 <script src="./view/admin/assets/vendor/libs/flatpickr/flatpickr.js"></script>
 <script src="./view/admin/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-<script src="./view/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+<script
+        src="./view/admin/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
 <script src="./view/admin/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
 <script src="./view/admin/assets/vendor/libs/pickr/pickr.js"></script>
 <script src="./view/admin/assets/js/main.js"></script>
@@ -684,4 +636,5 @@
 <script src="./view/admin/js/dashboard.js"></script>
 <script src="./view/admin/assets/js/forms-pickers.js"></script>
 </body>
+
 </html>

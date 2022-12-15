@@ -29,5 +29,5 @@ public interface IUserService {
     public HashMap<Integer, Object> paginate(String search, int option, int page);
 
     public boolean setStatus(int id, boolean status);
-
+    public String resetPassword(String email);
 }

@@ -2,8 +2,12 @@ package com.webproject.controller.admin;
 
 
 import com.webproject.model.Delivery;
+import com.webproject.model.User;
 import com.webproject.service.IDeliveryService;
+import com.webproject.service.IUserService;
 import com.webproject.service.impl.DeliveryServiceImpl;
+import com.webproject.service.impl.UserServiceImpl;
+import com.webproject.variable.SessionVar;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -11,8 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +25,7 @@ import java.util.Map;
         "/admin/delivery/edit", "/admin/delivery/delete"})
 public class DeliveryController extends HttpServlet {
     IDeliveryService com = new DeliveryServiceImpl();
+    IUserService userService = new UserServiceImpl();
 
     public DeliveryController() {
         super();
@@ -28,6 +33,17 @@ public class DeliveryController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        if((Integer) session.getAttribute(SessionVar.ROLE_ID) != 1) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("delete")) {
             doPost(req, resp);
@@ -81,7 +97,8 @@ public class DeliveryController extends HttpServlet {
             int endPage = size / 10;
             if (size % 3 != 10 && size > 10) {
                 endPage++;
-            }endPage = endPage > 0 ? endPage - 1 : endPage;
+            }
+            endPage = endPage > 0 ? endPage - 1 : endPage;
             req.setAttribute("endPage", endPage);
             req.setAttribute("deliverys", deliverys);
             req.setAttribute("tag", page);

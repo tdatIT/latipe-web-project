@@ -2,17 +2,20 @@ package com.webproject.controller.admin;
 
 
 import com.webproject.model.Store;
+import com.webproject.model.User;
 import com.webproject.service.IStoreService;
+import com.webproject.service.IUserService;
 import com.webproject.service.impl.StoreServiceImpl;
-import org.apache.commons.beanutils.BeanUtils;
+import com.webproject.service.impl.UserServiceImpl;
+import com.webproject.variable.SessionVar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +29,26 @@ public class StoreController extends HttpServlet {
         super();
     }
 
+    IUserService userService = new UserServiceImpl();
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        if((Integer) session.getAttribute(SessionVar.ROLE_ID) != 1) {
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("active")) {
             active(req, resp);
             return;
-        }else if (url.contains("delete")) {
+        } else if (url.contains("delete")) {
             doPost(req, resp);
             return;
         }
@@ -45,7 +61,7 @@ public class StoreController extends HttpServlet {
         String url = req.getRequestURL().toString();
         if (url.contains("active")) {
             active(req, resp);
-        }else if (url.contains("delete")) {
+        } else if (url.contains("delete")) {
             delete(req, resp);
         }
         resp.sendRedirect(req.getContextPath() + "/admin/store");
@@ -71,6 +87,7 @@ public class StoreController extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     protected void findAll(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
@@ -86,7 +103,8 @@ public class StoreController extends HttpServlet {
             int endPage = size / 10;
             if (size % 3 != 10 && size > 10) {
                 endPage++;
-            }endPage = endPage > 0 ? endPage - 1 : endPage;
+            }
+            endPage = endPage > 0 ? endPage - 1 : endPage;
             req.setAttribute("endPage", endPage);
             req.setAttribute("stores", stores);
             req.setAttribute("tag", page);
