@@ -83,7 +83,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${hotProducts}" begin="0"
                                        end="2">
-                                <a href="#" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -98,7 +98,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${hotProducts}" begin="3"
                                        end="5">
-                                <a href="#" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -120,7 +120,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${flashSale}" begin="0"
                                        end="2">
-                                <a href="${pageContext.request.contextPath}/product/?id=${i.productId}" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -135,7 +135,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${flashSale}" begin="3"
                                        end="5">
-                                <a href="#" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -157,7 +157,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${newProducts}" begin="0"
                                        end="2">
-                                <a href="${pageContext.request.contextPath}/product/?id=${i.productId}" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -172,7 +172,7 @@
                         <div class="latest-prdouct__slider__item">
                             <c:forEach var="i" items="${newProducts}" begin="3"
                                        end="5">
-                                <a href="#" class="latest-product__item">
+                                <a href="${pageContext.request.contextPath}/product?id=${i.productId}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="${pageContext.request.contextPath}/upload/${i.productImgsByProductId[0].fileName}"
                                              alt="">
@@ -218,7 +218,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="${pageContext.request.contextPath}/product/?id=${i.productId}">${i.name}</a></h6>
+                            <h6><a href="${pageContext.request.contextPath}/product?id=${i.productId}">${i.name}</a></h6>
                             <h5>${i.price.intValue()} ₫</h5>
                         </div>
                     </div>

@@ -73,19 +73,27 @@ public class ProductServiceImpl implements IProductService {
         return productDAO.setStatus(id, status);
     }
 
-    public List<Product> newProductList() {
-        return productDAO.newProductList();
-    }
+    @Override
     public List<Product> find6FlashSale() {
         return productDAO.find6FlashSale();
     }
+
+    @Override
+    public List<Product> newProductList() {
+        return productDAO.newProductList();
+    }
+
+    @Override
     public List<Product> findHotProduct() {
         return productDAO.findHotProduct();
     }
-    public List<Product> findProductForYou() {
-        return productDAO.findProductForYou();
+
+    @Override
+    public List<Product> findProductForYou(int userId) {
+        return productDAO.findProductForYou(userId);
     }
     public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status){
         return productDAO.paginateWeb( search,page,  cate,  minPrice,  maxPrice,  status);
     }
+
 }

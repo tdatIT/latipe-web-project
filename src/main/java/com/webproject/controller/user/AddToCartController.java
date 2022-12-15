@@ -31,53 +31,53 @@ public class AddToCartController extends HttpServlet {
         HttpSession session = req.getSession();
         String url = req.getRequestURL().toString();
         int prodID = req.getParameter("id") != null ? Integer.parseInt(req.getParameter("id")) : -1;
-        if (prodID == -1) {
-            // show ra het san pham
-            int cate = req.getParameter("cate") != null ? Integer.parseInt(req.getParameter("cate")) : -1;
-            int maxPrice = req.getParameter("maxPrice") != null ? Integer.parseInt(req.getParameter("maxPrice")) : -1;
-            int minPrice = req.getParameter("minPrice") != null ? Integer.parseInt(req.getParameter("minPrice")) : -1;
-            int statusPrice = req.getParameter("status") != null ? Integer.parseInt(req.getParameter("status")) : -1;
-            int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 0;
-            String search = req.getParameter("search") != null ? req.getParameter("search") : "";
-
-            List<Category> cates = cateService.findAll();
-            List<Product> newProd = productService.newProductList();
-            List<Product> saleProd = productService.find6FlashSale();
-
-            HashMap<Integer, Object> list = productService.paginateWeb(search, page, cate, minPrice, maxPrice, statusPrice);
-            Map.Entry<Integer, Object> entry = list.entrySet().iterator().next();
-            int size = entry.getKey();
-            List<Product> prods = (List<Product>) entry.getValue();
-            int endPage = size / 12;
-            if (size % 12 != 0 && size > 12) {
-                endPage++;
-            }
-            endPage = endPage > 0 ? endPage - 1 : endPage;
-
-            req.setAttribute("size", size);
-            req.setAttribute("endPage", endPage);
-            req.setAttribute("tag", page);
-            req.setAttribute("search", search);
-            req.setAttribute("cates", cates);
-            req.setAttribute("newProd", newProd);
-            req.setAttribute("saleProd", saleProd);
-            req.setAttribute("prods", prods);
-            req.getRequestDispatcher("/view/user/products.jsp").forward(req, resp);
-        } else if (url.contains("addToCart")) {
-            addToCart(req, resp);
-        } else {
-            // hieern thi chi tiet 1 san pham
-            Product prod = productService.findById(prodID);
-            req.setAttribute("prod", prod);
-            req.getRequestDispatcher("/view/user/ShoppingDetail.jsp").forward(req, resp);
-        }
-//        findAll(req, resp);
         try {
+            if (prodID == -1) {
+                // show ra het san pham
+                int cate = req.getParameter("cate") != null ? Integer.parseInt(req.getParameter("cate")) : -1;
+                int maxPrice = req.getParameter("maxPrice") != null ? Integer.parseInt(req.getParameter("maxPrice")) : -1;
+                int minPrice = req.getParameter("minPrice") != null ? Integer.parseInt(req.getParameter("minPrice")) : -1;
+                int statusPrice = req.getParameter("status") != null ? Integer.parseInt(req.getParameter("status")) : -1;
+                int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 0;
+                String search = req.getParameter("search") != null ? req.getParameter("search") : "";
+
+                List<Category> cates = cateService.findAll();
+                List<Product> newProd = productService.newProductList();
+                List<Product> saleProd = productService.find6FlashSale();
+
+                HashMap<Integer, Object> list = productService.paginateWeb(search, page, cate, minPrice, maxPrice, statusPrice);
+                Map.Entry<Integer, Object> entry = list.entrySet().iterator().next();
+                int size = entry.getKey();
+                List<Product> prods = (List<Product>) entry.getValue();
+                int endPage = size / 12;
+                if (size % 12 != 0 && size > 12) {
+                    endPage++;
+                }
+                endPage = endPage > 0 ? endPage - 1 : endPage;
+                req.setAttribute("size", size);
+                req.setAttribute("endPage", endPage);
+                req.setAttribute("tag", page);
+                req.setAttribute("search", search);
+                req.setAttribute("cates", cates);
+                req.setAttribute("newProd", newProd);
+                req.setAttribute("saleProd", saleProd);
+                req.setAttribute("prods", prods);
+                req.getRequestDispatcher("/view/user/products.jsp").forward(req, resp);
+            } else if (url.contains("addToCart")) {
+                addToCart(req, resp);
+            } else {
+                // hieern thi chi tiet 1 san pham
+                Product prod = productService.findById(prodID);
+                List<Product> products = productService.find6FlashSale();
+                req.setAttribute("products", products);
+                req.setAttribute("prod", prod);
+                req.getRequestDispatcher("/view/user/ShoppingDetail.jsp").forward(req, resp);
+            }
+            //findAll(req, resp);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -89,7 +89,7 @@ public class AddToCartController extends HttpServlet {
         } else if (url.contains("delete")) {
             delete(req, resp);
         }
-        resp.sendRedirect(req.getContextPath() + "/user/userAddress");
+        resp.sendRedirect(req.getContextPath() + "/cart");
 
     }
 
@@ -107,7 +107,7 @@ public class AddToCartController extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             // lay ra thong tin user
-            if (session.getAttribute(SessionVar.USER_ID) == null){
+            if (session.getAttribute(SessionVar.USER_ID) == null) {
                 resp.sendRedirect("/login");
                 return;
             }
@@ -123,7 +123,7 @@ public class AddToCartController extends HttpServlet {
             throws ServletException, IOException {
         try {
             HttpSession session = req.getSession();
-            if (session.getAttribute(SessionVar.USER_ID) == null){
+            if (session.getAttribute(SessionVar.USER_ID) == null) {
                 resp.sendRedirect("/login");
                 return;
             }
@@ -134,7 +134,10 @@ public class AddToCartController extends HttpServlet {
             int quantity = Integer.parseInt(req.getParameter("quantity"));
 
             Cart cartData = cartService.findById(cart.getCartId());
-            List<CartItems> listItem = cartData.getCartItemsByCartId().stream().filter(x -> ((CartItems) x).getProductId() == prodID).collect(Collectors.toList());
+            List<CartItems> listItem = cartData
+                    .getCartItemsByCartId().stream()
+                    .filter(x -> ((CartItems) x).getProductId() == prodID)
+                    .collect(Collectors.toList());
             if (listItem.size() > 0) {
                 listItem.get(0).setQuantity(listItem.get(0).getQuantity() + quantity);
                 cartItemsService.updateCartItems(listItem.get(0));

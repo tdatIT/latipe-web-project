@@ -73,13 +73,13 @@ public class User {
     @OneToMany(mappedBy = "userByOwnId")
     private Collection<Store> storesByUserId;
     @ManyToOne
-    @JoinColumn(name = "user_level_id", referencedColumnName = "user_level_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "user_level_id", referencedColumnName = "user_level_id", nullable = false, insertable = false, updatable = false)
     private UserLevel userLevelByUserLevelId;
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, insertable = false, updatable = false)
     private Role roleByRoleId;
     @ManyToOne
-    @JoinColumn(name = "store_emp_id", referencedColumnName = "store_id", insertable=false, updatable=false)
+    @JoinColumn(name = "store_emp_id", referencedColumnName = "store_id", insertable = false, updatable = false)
     private Store storeByStoreEmpId;
     @OneToMany(mappedBy = "userByUserId", fetch = FetchType.LAZY)
     private Collection<UserAddress> userAddressesByUserId;
@@ -104,7 +104,7 @@ public class User {
         this.userLevelId = userLevelId;
     }
 
-        public String getFirstname() {
+    public String getFirstname() {
         return firstname;
     }
 

@@ -331,26 +331,6 @@ public class ProductDAOImpl implements IProductDAO {
         return products;
     }
 
-    @Override
-    public List<Product> findProductForYou() {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        String HQL = "from Product p inner join Orders o ";
-        List<Product> products = new ArrayList<>();
-
-        try {
-            products = session.createQuery(HQL)
-                    .setFirstResult(0)
-                    .setMaxResults(6)
-                    .list();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return products;
-    }
-
     public HashMap<Integer, Object> paginateWeb(String search, int page, int cate, int minPrice, int maxPrice, int status) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         List<Product> data = null;
@@ -416,7 +396,41 @@ public class ProductDAOImpl implements IProductDAO {
         HashMap<Integer, Object> results = new HashMap<Integer, Object>();
         results.put(count, data);
         return results;
+    }
 
+    @Override
+    public List<Product> findProductForYou(int userId) {
+        String HQL = (userId == 0) ?
+                "select i.productByProductId " +
+                        "from OrderItems i " +
+                        "group by i.productByProductId " +
+                        "order by count(i.productByProductId) desc"
+                :
+                "select item.productByProductId from OrderItems item " +
+                        " where (item.productByProductId.isActive = true) and (item.order.userId = :id) " +
+                        " order by item.order.createDate desc ";
+        Session session = HibernateUtils.getSessionFactory().openSession();
 
+        List<Product> products = new ArrayList<>();
+        try {
+
+            products = (userId != 0) ?
+                    session.createQuery(HQL)
+                            .setFirstResult(0)
+                            .setMaxResults(8)
+                            .setParameter("id", userId)
+                            .list()
+                    :
+                    session.createQuery(HQL)
+                            .setFirstResult(0)
+                            .setMaxResults(8)
+                            .list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
     }
 }

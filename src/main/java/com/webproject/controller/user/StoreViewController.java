@@ -1,4 +1,4 @@
-package com.webproject.controller;
+package com.webproject.controller.user;
 
 import com.webproject.model.Product;
 import com.webproject.model.Store;

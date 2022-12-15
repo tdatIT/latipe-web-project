@@ -8,15 +8,15 @@ import com.webproject.model.User;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.Query;
 import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.persistence.Query;
+import java.util.List;
+import java.util.Objects;
 
 public class OrderDAOImpl implements IOrderDAO {
     private SessionFactory factory = HibernateUtils.getSessionFactory();
@@ -66,7 +66,7 @@ public class OrderDAOImpl implements IOrderDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             orders = session.get(Orders.class, id);
-            Hibernate.initialize(orders.getOrderItemsByOrderId());
+            Hibernate.initialize(orders.getItem());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,6 +138,7 @@ public class OrderDAOImpl implements IOrderDAO {
         return status;
 
     }
+
     @Override
     public List<Objects[]> totalOrdersFromStore5Month(int storeId, Date date) {
         List<Objects[]> orderToMonth = new ArrayList<>();
@@ -191,10 +192,10 @@ public class OrderDAOImpl implements IOrderDAO {
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             String HQL = "select i.productByProductId.name,count(*) " +
-                    "from OrderItems i inner join i.orderByOrderId " +
-                    "where ((month (i.orderByOrderId.createDate)<= :_start and month(i.orderByOrderId.createDate)>=:_end) " +
-                    "and year(i.orderByOrderId.createDate)=:year)" +
-                    "and i.orderByOrderId.storeId=:storeId " +
+                    "from OrderItems i inner join i.order " +
+                    "where ((month (i.order.createDate)<= :_start and month(i.order.createDate)>=:_end) " +
+                    "and year(i.order.createDate)=:year)" +
+                    "and i.order.storeId=:storeId " +
                     "group by i.productId";
             orderToMonth = session.createQuery(HQL)
                     .setParameter("storeId", storeId)
@@ -209,11 +210,12 @@ public class OrderDAOImpl implements IOrderDAO {
         }
         return orderToMonth;
     }
+
     @Override
     public List<Orders> getStatistic(String option, LocalDate date) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Criteria cr = session.createCriteria(Orders.class);
-        DateTimeFormatter df =DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 0 nam, 1 thang, 2 7 ngay truoc, 3 ngay
         switch (option) {
             case "0": {
@@ -224,7 +226,7 @@ public class OrderDAOImpl implements IOrderDAO {
             }
             case "1": {
                 java.util.Date fromDate = java.util.Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
-                java.util.Date toDate = java.util.Date.from(LocalDate.parse((date.getYear() + "-" +( date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
+                java.util.Date toDate = java.util.Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue() + 1) + "-01")).atStartOfDay(ZoneId.systemDefault()).toInstant());
                 cr.add(Restrictions.between("createDate", fromDate, toDate));
                 break;
             }
@@ -252,7 +254,7 @@ public class OrderDAOImpl implements IOrderDAO {
     @Override
     public HashMap<Integer, Object> paginate(String search, int page, int status) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        List<Orders> data = new ArrayList<Orders>() ;
+        List<Orders> data = new ArrayList<Orders>();
         int count = 0;
         try {
             Query q;
@@ -266,7 +268,7 @@ public class OrderDAOImpl implements IOrderDAO {
             q.setFirstResult(10 * page);
             q.setParameter("search", "%" + search + "%");
             List<Object[]> rawData = q.getResultList();
-            for (Object[] t : rawData){
+            for (Object[] t : rawData) {
                 data.add((Orders) t[0]);
             }
             //count

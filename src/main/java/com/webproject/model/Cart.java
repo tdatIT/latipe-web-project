@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="cart")
+@Table(name = "cart")
 public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -25,9 +25,9 @@ public class Cart {
     @Column(name = "updateDate", nullable = true)
     private Date updateDate;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User userByUserId;
-    @OneToMany(mappedBy = "cartByCartId")
+    @OneToMany(mappedBy = "cartByCartId", fetch = FetchType.LAZY)
     private Collection<CartItems> cartItemsByCartId;
 
     public int getCartId() {

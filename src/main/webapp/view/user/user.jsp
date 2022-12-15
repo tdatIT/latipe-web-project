@@ -17,7 +17,7 @@
     <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <c:import url="head_link.jsp"></c:import>
+    <c:import url="head_link_v2.jsp"></c:import>
 </head>
 
 

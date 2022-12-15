@@ -4,5 +4,6 @@ import com.webproject.model.Cart;
 
 public interface ICartDAO {
     public Cart findById(int id);
+    public Cart findCartByUserId(int userId);
 
 }

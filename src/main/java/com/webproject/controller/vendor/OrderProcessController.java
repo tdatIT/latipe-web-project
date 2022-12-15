@@ -32,7 +32,7 @@ public class OrderProcessController extends HttpServlet {
                 if (order.getStoreId() == (Integer) session.getAttribute(SessionVar.STORE_ID)) {
                     req.setAttribute("order", order);
 
-                    List<OrderItems> items = new ArrayList<>(order.getOrderItemsByOrderId());
+                    List<OrderItems> items = new ArrayList<>(order.getItem());
                     req.setAttribute("items", items);
                     req.getRequestDispatcher("/" + Router.S_ORDER_P).forward(req, resp);
                 } else

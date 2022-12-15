@@ -34,7 +34,7 @@ public interface IProductService {
     public List<Product> newProductList();
     public List<Product> find6FlashSale();
     public List<Product> findHotProduct();
-    public List<Product> findProductForYou();
+    public List<Product> findProductForYou(int userId);
 
     public HashMap<Integer, Object> paginateWeb(String search,int page, int cate, int minPrice, int maxPrice, int status);
 }

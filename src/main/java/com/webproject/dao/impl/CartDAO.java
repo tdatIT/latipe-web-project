@@ -21,4 +21,22 @@ public class CartDAO implements ICartDAO {
         }
         return cartItems;
     }
+
+    @Override
+    public Cart findCartByUserId(int userId) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Cart cart = null;
+        try {
+            String HQL = "from Cart where userId = :id";
+            cart = (Cart) session.createQuery(HQL)
+                    .setParameter("id", userId)
+                    .uniqueResult();
+            Hibernate.initialize(cart.getCartItemsByCartId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return cart;
+    }
 }

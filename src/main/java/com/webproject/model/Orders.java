@@ -37,9 +37,6 @@ public class Orders {
     @Column(name = "amountFromUser", nullable = false, precision = 0)
     private double amountFromUser;
     @Basic
-    @Column(name = "amountFromStore", nullable = false, precision = 0)
-    private double amountFromStore;
-    @Basic
     @Column(name = "amountToStore", nullable = false, precision = 0)
     private double amountToStore;
     @Basic
@@ -60,8 +57,8 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id", nullable = false, insertable = false, updatable = false)
     private Delivery deliveryByDeliveryId;
-    @OneToMany(mappedBy = "orderByOrderId", fetch = FetchType.LAZY)
-    private Collection<OrderItems> orderItemsByOrderId;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<OrderItems> item;
 
     public int getOrderId() {
         return orderId;
@@ -135,13 +132,6 @@ public class Orders {
         this.amountFromUser = amountFromUser;
     }
 
-    public double getAmountFromStore() {
-        return amountFromStore;
-    }
-
-    public void setAmountFromStore(double amountFromStore) {
-        this.amountFromStore = amountFromStore;
-    }
 
     public double getAmountToStore() {
         return amountToStore;
@@ -180,12 +170,12 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return orderId == orders.orderId && userId == orders.userId && storeId == orders.storeId && deliveryId == orders.deliveryId && status == orders.status && isPaidBefore == orders.isPaidBefore && Double.compare(orders.amountFromUser, amountFromUser) == 0 && Double.compare(orders.amountFromStore, amountFromStore) == 0 && Double.compare(orders.amountToStore, amountToStore) == 0 && Double.compare(orders.amountToGd, amountToGd) == 0 && Objects.equals(address, orders.address) && Objects.equals(phone, orders.phone) && Objects.equals(createDate, orders.createDate) && Objects.equals(updateDate, orders.updateDate);
+        return orderId == orders.orderId && userId == orders.userId && storeId == orders.storeId && deliveryId == orders.deliveryId && status == orders.status && isPaidBefore == orders.isPaidBefore && Double.compare(orders.amountFromUser, amountFromUser) == 0 && Double.compare(orders.amountToStore, amountToStore) == 0 && Double.compare(orders.amountToGd, amountToGd) == 0 && Objects.equals(address, orders.address) && Objects.equals(phone, orders.phone) && Objects.equals(createDate, orders.createDate) && Objects.equals(updateDate, orders.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, userId, storeId, deliveryId, address, phone, status, isPaidBefore, amountFromUser, amountFromStore, amountToStore, amountToGd, createDate, updateDate);
+        return Objects.hash(orderId, userId, storeId, deliveryId, address, phone, status, isPaidBefore, amountFromUser, amountToStore, amountToGd, createDate, updateDate);
     }
 
     public User getUserByUserId() {
@@ -212,12 +202,12 @@ public class Orders {
         this.deliveryByDeliveryId = deliveryByDeliveryId;
     }
 
-    public Collection<OrderItems> getOrderItemsByOrderId() {
-        return orderItemsByOrderId;
+    public Collection<OrderItems> getItem() {
+        return item;
     }
 
-    public void setOrderItemsByOrderId(Collection<OrderItems> orderItemsByOrderId) {
-        this.orderItemsByOrderId = orderItemsByOrderId;
+    public void setItem(Collection<OrderItems> item) {
+        this.item = item;
     }
 
     @Override
