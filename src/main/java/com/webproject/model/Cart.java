@@ -98,4 +98,12 @@ public class Cart {
     public void setCartItemsByCartId(Collection<CartItems> cartItemsByCartId) {
         this.cartItemsByCartId = cartItemsByCartId;
     }
+
+    public double getTotalPrice() {
+        double total = 0;
+        for (CartItems i : this.cartItemsByCartId) {
+            total += (i.getQuantity() * i.getProductByProductId().getPrice());
+        }
+        return total;
+    }
 }

@@ -91,7 +91,7 @@ public class OrderDAOImpl implements IOrderDAO {
     @Override
     public boolean insertOrder(Orders orders) {
         boolean status = false;
-        Session session = factory.getCurrentSession();
+        Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
             session.save(orders);

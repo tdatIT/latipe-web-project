@@ -6,4 +6,6 @@ public interface ICartService {
     public Cart findById(int id);
 
     Cart findCartByUserId(int userId);
+
+    void deletedItems(Cart cart);
 }
