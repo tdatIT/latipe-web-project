@@ -74,7 +74,7 @@
     </div>
 </section>
 <div class=" mt-5 mb-10" style="margin-bottom: 20px; align-items: center; text-align: center">
-    <h5 style=" color: red;">Sau khi nhập email người dùng vào kiểm tra trong hòm thư hoặc spam để lấy email mới trường hợp email không
+    <h5 style=" color: red;">Sau khi nhập email người dùng vào kiểm tra trong hòm thư hoặc spam để lấy password mới trường hợp email không
         tồn tại sẻ báo lỗi</h5>
 </div>
 <!-- Breadcrumb Section End -->
