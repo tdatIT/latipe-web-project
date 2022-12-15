@@ -29,6 +29,12 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("delete")) {
             doPost(req, resp);
@@ -46,8 +52,13 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+        HttpSession session = req.getSession();
+        if (session.getAttribute(SessionVar.USER_ID) == null){
+            resp.sendRedirect(req.getContextPath() +"/login");
+            return;
+        }
+        User user = userService.findById((Integer) session.getAttribute(SessionVar.USER_ID));
+        req.setAttribute("user", user);
         String url = req.getRequestURL().toString();
         if (url.contains("edit")) {
             update(req, resp);
