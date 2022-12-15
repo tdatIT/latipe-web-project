@@ -85,12 +85,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <!-- Checkbox -->
                         <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3"/>
-                            <label class="form-check-label" for="form2Example3">
-                                Lưu thiết bị
-                            </label>
+
                         </div>
-                        <a href="forget.html" class="text-body">Quên mật khẩu</a>
+                        <a href="${pageContext.request.contextPath}/forgotPassword" class="text-body">Quên mật khẩu</a>
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">

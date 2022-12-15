@@ -88,3 +88,4 @@
 <script src="view/web/assets/js/mixitup.min.js"></script>
 <script src="view/web/assets/js/owl.carousel.min.js"></script>
 <script src="view/web/assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/view/user/assets/js/search.js"></script>

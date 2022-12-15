@@ -29,11 +29,14 @@
                         </div>
                         <c:if test="${sessionScope.user_id eq null}">
                             <div class="header__top__right__social">
-                                <a href="/login"><i class="fa fa-sign-in" style="margin-right:5px ;"></i>Đăng Nhập</a>
+                                <a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in"
+                                                                                      style="margin-right:5px ;"></i>Đăng
+                                    Nhập</a>
 
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="signup"><i class="fa fa-user"></i>Đăng ký</a>
+                                <a href="${pageContext.request.contextPath}/signup"><i class="fa fa-user"></i>Đăng
+                                    ký</a>
                             </div>
                         </c:if>
                         <c:if test="${sessionScope.user_id ne null}">
@@ -71,8 +74,15 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/my-order">
+                                <i class="fa fa-shopping-bag"></i><span>1</span>
+                            </a>
+                        </li>
+                        <li><a href="${pageContext.request.contextPath}/cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>3</span></a>
+                        </li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
                 </div>

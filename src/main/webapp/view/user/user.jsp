@@ -498,12 +498,12 @@
 
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/view/admin/assets/js/main.js"></script>
-
 <!-- Page JS -->
 <script src="${pageContext.request.contextPath}/view/admin/assets/js/modal-edit-user.js"></script>
 <script src="${pageContext.request.contextPath}/view/admin/assets/js/app-user-view.js"></script>
 <script src="${pageContext.request.contextPath}/view/admin/assets/js/app-user-view-account.js"></script>
 <script src="${pageContext.request.contextPath}/view/user/assets/js/user.js"></script>
+<script src="${pageContext.request.contextPath}/view/user/assets/js/search.js"></script>
 
 </body>
 
