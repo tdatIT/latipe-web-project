@@ -168,7 +168,7 @@ public class OrderDAOImpl implements IOrderDAO {
         List<Objects[]> orderToMonth = new ArrayList<>();
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
-            String HQL = "select month(o.createDate),sum(o.amountFromStore) from Orders o " +
+            String HQL = "select month(o.createDate),sum(o.amountToStore) from Orders o " +
                     "where ((MONTH(o.createDate)<= :_start AND MONTH(o.createDate)>=:_end) AND YEAR(o.createDate)=:year)" +
                     "AND o.storeId =:storeId  group by " +
                     "month(o.createDate) order by MONTH(o.createDate) DESC ";
@@ -184,6 +184,7 @@ public class OrderDAOImpl implements IOrderDAO {
             session.close();
         }
         return orderToMonth;
+
     }
 
     @Override
