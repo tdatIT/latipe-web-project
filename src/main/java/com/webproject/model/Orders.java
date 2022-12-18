@@ -57,7 +57,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "delivery_id", referencedColumnName = "delivery_id", nullable = false, insertable = false, updatable = false)
     private Delivery deliveryByDeliveryId;
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Collection<OrderItems> item;
 
     public int getOrderId() {

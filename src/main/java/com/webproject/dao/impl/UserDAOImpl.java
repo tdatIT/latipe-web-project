@@ -31,6 +31,7 @@ public class UserDAOImpl implements IUsersDAO {
             user = session.get(User.class, id);
             Hibernate.initialize(user.getUserAddressesByUserId());
             Hibernate.initialize(user.getCartsByUserId());
+            Hibernate.initialize(user.getOrdersByUserId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
