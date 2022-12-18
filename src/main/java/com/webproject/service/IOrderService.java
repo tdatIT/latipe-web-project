@@ -19,6 +19,9 @@ public interface IOrderService {
 
     List<Orders> findByDate(Date date);
 
+    List<Orders> findOrderByStatus(int shopId,int status);
+
+
     boolean insertOrder(Orders orders);
 
     boolean updateOrder(Orders orders);

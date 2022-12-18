@@ -227,7 +227,7 @@ public class OrderDAOImpl implements IOrderDAO {
                 break;
             }
             case "1": {
-                YearMonth yearMonthObject = YearMonth.of(date.getYear(),  date.getMonth().getValue());
+                YearMonth yearMonthObject = YearMonth.of(date.getYear(), date.getMonth().getValue());
                 int daysInMonth = yearMonthObject.lengthOfMonth();
                 java.util.Date fromDate = java.util.Date.from(LocalDate.parse(date.getYear() + "-" + date.getMonth().getValue() + "-01").atStartOfDay(ZoneId.systemDefault()).toInstant());
                 java.util.Date toDate = java.util.Date.from(LocalDate.parse((date.getYear() + "-" + (date.getMonth().getValue()) + "-" + daysInMonth)).atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -348,5 +348,29 @@ public class OrderDAOImpl implements IOrderDAO {
             session.close();
         }
         return status1;
+    }
+
+    @Override
+    public List<Orders> findOrderByStatus(int shopId, int status) {
+        List<Orders> orders = new ArrayList<>();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            String HQL = status == 1 ? "select o from Orders o " +
+                    "where o.storeId=:shopId " +
+                    "and o.status=:status"
+                    :
+                    "select o from Orders o " +
+                            "where o.storeId=:shopId " +
+                            "and o.status>=:status";
+            orders = session.createQuery(HQL)
+                    .setParameter("shopId", shopId)
+                    .setParameter("status", status)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return orders;
     }
 }
