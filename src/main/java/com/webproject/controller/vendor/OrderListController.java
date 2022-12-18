@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {Router.STORE_O})
@@ -25,12 +26,25 @@ public class OrderListController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         HttpSession session = req.getSession();
         try {
-            if (session.getAttribute(SessionVar.STORE_OBJ) != null) {
-                Store store = (Store) session.getAttribute(SessionVar.STORE_OBJ);
-                List<Orders> orders = orderService.findByShopId(store.getStoreId());
-                req.setAttribute("orders", orders);
-                req.getRequestDispatcher("/" + Router.S_ORDER_M).forward(req, resp);
+            Store store = (Store) session.getAttribute(SessionVar.STORE_OBJ);
+            int type = req.getParameter("type") != null ?
+                    Integer.parseInt(req.getParameter("type")) : 0;
+            List<Orders> orders = new ArrayList<>();
+            switch (type) {
+                case 0:
+                    orders = orderService.findByShopId(store.getStoreId());
+                    break;
+                case 1:
+                    orders = orderService.findOrderByStatus(store.getStoreId(), 1);
+                    break;
+                case 2:
+                    orders = orderService.findOrderByStatus(store.getStoreId(), 2);
+                    break;
             }
+
+            req.setAttribute("orders", orders);
+            req.getRequestDispatcher("/" + Router.S_ORDER_M).forward(req, resp);
+
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + Router.ERROR404);

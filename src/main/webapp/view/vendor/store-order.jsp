@@ -19,6 +19,8 @@
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/view/web/assets/img/favicon.png">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/vendor/assets/css/adminx.css"
           media="screen"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
 </head>
 <body>
 <div class="adminx-container">
@@ -40,6 +42,21 @@
                 </nav>
                 <div class="pb-3">
                     <h1>Tất cả các đơn hàng</h1>
+                </div>
+                <div class="row justify-content-lg-start mt-lg-2">
+                    <div class="col">
+                        <div class="card mb-grid">
+                            <form>
+                                <select class="ui dropdown" name="type">
+                                    <option value="" selected hidden>Lọc đơn hàng</option>
+                                    <option value="1">Danh sách đơn hàng mới</option>
+                                    <option value="2">Danh sách đơn hàng đã xử lý</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Lọc</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col">
@@ -115,7 +132,10 @@
 </div>
 
 <!-- If you prefer jQuery these are the required scripts -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.2.min.js"
+        integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -123,6 +143,9 @@
 <script src="${pageContext.request.contextPath}/view/vendor/assets/js/vendor.js"></script>
 <script src="${pageContext.request.contextPath}/view/vendor/assets/js/adminx.js"></script>
 <script>
+    $('.ui.dropdown')
+        .dropdown()
+    ;
     $(document).ready(function () {
         var table = $('[data-table]').DataTable({
             "columns": [

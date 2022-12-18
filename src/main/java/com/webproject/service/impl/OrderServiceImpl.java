@@ -99,4 +99,10 @@ public class OrderServiceImpl implements IOrderService {
     public boolean setStatus(int id, int status) {
         return orderDAO.setStatus(id, status);
     }
+
+    @Override
+    public List<Orders> findOrderByStatus(int shopId,int status) {
+        return orderDAO.findOrderByStatus(shopId,status);
+    }
+
 }
